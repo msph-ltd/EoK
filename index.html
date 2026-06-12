@@ -46,7 +46,6 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -59,7 +58,6 @@
     overflow-x: hidden;
   }
 
-  /* Grain texture overlay */
   body::before {
     content: '';
     position: fixed;
@@ -70,12 +68,11 @@
     opacity: 0.4;
   }
 
-  /* Geometric background pattern */
   body::after {
     content: '';
     position: fixed;
     inset: 0;
-    background-image: 
+    background-image:
       repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(201,168,76,0.015) 80px, rgba(201,168,76,0.015) 81px),
       repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(201,168,76,0.015) 80px, rgba(201,168,76,0.015) 81px);
     pointer-events: none;
@@ -95,653 +92,186 @@
     gap: 20px;
     flex-wrap: wrap;
   }
-
-  .brand {
-    display: flex;
-    align-items: flex-start;
-    gap: 20px;
-  }
-
+  .brand { display: flex; align-items: flex-start; gap: 20px; }
   .brand-monogram {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: flex; flex-direction: column; align-items: center;
     border-right: 1px solid rgba(201,168,76,0.25);
     padding-right: 20px;
-    margin-right: 0;
   }
-
   .monogram-eok {
-    font-family: var(--font-display);
-    font-size: 42px;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    color: var(--gold);
-    line-height: 1;
-    text-transform: uppercase;
+    font-family: var(--font-display); font-size: 42px; font-weight: 600;
+    letter-spacing: 0.18em; color: var(--gold); line-height: 1; text-transform: uppercase;
   }
+  .monogram-rule { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); margin: 6px 0 5px; }
+  .monogram-sub { font-family: var(--font-body); font-size: 8px; letter-spacing: 0.3em; color: var(--gold-dim); text-transform: uppercase; }
+  .brand-title { font-family: var(--font-display); font-size: 28px; font-weight: 500; letter-spacing: 0.04em; color: var(--parchment); line-height: 1.1; }
+  .brand-subtitle { font-family: var(--font-body); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ash-light); margin-top: 4px; }
+  .brand-dates { font-family: var(--font-display); font-size: 14px; font-weight: 400; color: var(--gold); margin-top: 6px; letter-spacing: 0.06em; }
+  .brand-tagline { font-family: var(--font-display); font-size: 13px; font-style: italic; color: var(--text-secondary); margin-top: 2px; letter-spacing: 0.02em; }
 
-  .monogram-rule {
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
-    margin: 6px 0 5px;
-  }
-
-  .monogram-sub {
-    font-family: var(--font-body);
-    font-size: 8px;
-    letter-spacing: 0.3em;
-    color: var(--gold-dim);
-    text-transform: uppercase;
-  }
-
-  .brand-text {}
-
-  .brand-title {
-    font-family: var(--font-display);
-    font-size: 28px;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    color: var(--parchment);
-    line-height: 1.1;
-  }
-
-  .brand-subtitle {
-    font-family: var(--font-body);
-    font-size: 10px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--ash-light);
-    margin-top: 4px;
-  }
-
-  .brand-dates {
-    font-family: var(--font-display);
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--gold);
-    margin-top: 6px;
-    letter-spacing: 0.06em;
-  }
-
-  .brand-tagline {
-    font-family: var(--font-display);
-    font-size: 13px;
-    font-style: italic;
-    color: var(--text-secondary);
-    margin-top: 2px;
-    letter-spacing: 0.02em;
-  }
-
-  .header-controls {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 10px;
-    min-width: 160px;
-  }
-
-  .sync-info {
-    font-size: 11px;
-    color: var(--text-muted);
-    text-align: right;
-  }
-
+  .header-controls { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+  .header-btn-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+  .sync-info { font-size: 11px; color: var(--text-muted); text-align: right; }
   .sync-time { color: var(--ash-light); }
-
-  .sync-indicator {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    color: var(--text-muted);
-    text-transform: uppercase;
-  }
-
-  .sync-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--ash);
-    transition: background 0.3s;
-  }
-
-  .sync-dot.syncing {
-    background: var(--gold);
-    animation: pulse 1s infinite;
-  }
-
+  .sync-indicator { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; letter-spacing: 0.1em; color: var(--text-muted); text-transform: uppercase; }
+  .sync-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ash); transition: background 0.3s; }
+  .sync-dot.syncing { background: var(--gold); animation: pulse 1s infinite; }
   .sync-dot.live { background: #4a8c5c; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  .btn-refresh {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 7px 14px;
-    background: transparent;
-    border: 1px solid var(--border);
+  .btn-refresh, .btn-new-task {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 14px; background: transparent;
     border-radius: var(--radius);
-    color: var(--gold);
-    font-family: var(--font-body);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s;
+    font-family: var(--font-body); font-size: 11px; letter-spacing: 0.12em;
+    text-transform: uppercase; cursor: pointer; transition: all 0.2s;
   }
-
-  .btn-refresh:hover {
-    background: rgba(201,168,76,0.08);
-    border-color: rgba(201,168,76,0.35);
-  }
-
-  .btn-refresh svg { width: 12px; height: 12px; }
+  .btn-refresh { border: 1px solid var(--border); color: var(--gold); }
+  .btn-refresh:hover { background: rgba(201,168,76,0.08); border-color: rgba(201,168,76,0.35); }
+  .btn-new-task { border: 1px solid rgba(201,168,76,0.35); color: var(--gold); background: rgba(201,168,76,0.07); }
+  .btn-new-task:hover { background: rgba(201,168,76,0.14); }
+  .btn-refresh svg, .btn-new-task svg { width: 12px; height: 12px; }
 
   /* ── NAV TABS ── */
-  .nav-tabs {
-    display: flex;
-    gap: 2px;
-    margin-bottom: 28px;
-    border-bottom: 1px solid var(--border-subtle);
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
+  .nav-tabs { display: flex; gap: 2px; margin-bottom: 28px; border-bottom: 1px solid var(--border-subtle); overflow-x: auto; scrollbar-width: none; }
   .nav-tabs::-webkit-scrollbar { display: none; }
-
   .tab-btn {
-    padding: 10px 18px;
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    color: var(--text-muted);
-    font-family: var(--font-body);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
-    margin-bottom: -1px;
+    padding: 10px 18px; background: none; border: none; border-bottom: 2px solid transparent;
+    color: var(--text-muted); font-family: var(--font-body); font-size: 11px; letter-spacing: 0.12em;
+    text-transform: uppercase; cursor: pointer; transition: all 0.2s; white-space: nowrap; margin-bottom: -1px;
   }
-
   .tab-btn:hover { color: var(--text-secondary); }
-  .tab-btn.active {
-    color: var(--gold);
-    border-bottom-color: var(--gold);
-  }
-
+  .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
 
   /* ── SECTION HEADER ── */
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    margin-bottom: 18px;
-  }
-
-  .section-title {
-    font-family: var(--font-display);
-    font-size: 20px;
-    font-weight: 500;
-    color: var(--parchment-dim);
-    letter-spacing: 0.03em;
-  }
-
-  .section-rule {
-    flex: 1;
-    height: 1px;
-    background: var(--border-subtle);
-  }
-
-  .section-count {
-    font-size: 11px;
-    color: var(--text-muted);
-    letter-spacing: 0.1em;
-  }
+  .section-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 18px; }
+  .section-title { font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--parchment-dim); letter-spacing: 0.03em; }
+  .section-rule { flex: 1; height: 1px; background: var(--border-subtle); }
+  .section-count { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; }
 
   /* ── KPI CARDS ── */
-  .kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: 12px;
-    margin-bottom: 36px;
-  }
-
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 36px; }
   .kpi-card {
-    background: var(--surface);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
-    padding: 18px 16px;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.2s;
+    background: var(--surface); border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg); padding: 18px 16px; position: relative; overflow: hidden; transition: border-color 0.2s;
   }
-
-  .kpi-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--border);
-    transition: background 0.2s;
-  }
-
+  .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--border); transition: background 0.2s; }
   .kpi-card:hover { border-color: rgba(201,168,76,0.2); }
   .kpi-card:hover::before { background: rgba(201,168,76,0.4); }
-
   .kpi-card.accent-crimson::before { background: var(--crimson-muted); }
   .kpi-card.accent-gold::before { background: var(--gold); }
-
-  .kpi-value {
-    font-family: var(--font-display);
-    font-size: 38px;
-    font-weight: 600;
-    line-height: 1;
-    color: var(--gold);
-    letter-spacing: -0.01em;
-  }
-
+  .kpi-value { font-family: var(--font-display); font-size: 38px; font-weight: 600; line-height: 1; color: var(--gold); letter-spacing: -0.01em; }
   .kpi-card.accent-crimson .kpi-value { color: var(--crimson-soft); }
-
-  .kpi-label {
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-top: 6px;
-  }
+  .kpi-label { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); margin-top: 6px; }
 
   /* ── FILTERS ── */
-  .filters-bar {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 24px;
-    padding: 14px 16px;
-    background: var(--surface);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
-  }
-
-  .filter-group {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex: 1;
-    min-width: 130px;
-  }
-
-  .filter-group label {
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    white-space: nowrap;
-  }
-
+  .filters-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; padding: 14px 16px; background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); }
+  .filter-group { display: flex; align-items: center; gap: 6px; flex: 1; min-width: 130px; }
+  .filter-group label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; }
   .filter-input, .filter-select {
-    flex: 1;
-    padding: 6px 10px;
-    background: var(--charcoal-mid);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius);
-    color: var(--text-primary);
-    font-family: var(--font-body);
-    font-size: 12px;
-    outline: none;
-    transition: border-color 0.2s;
+    flex: 1; padding: 6px 10px; background: var(--charcoal-mid);
+    border: 1px solid var(--border-subtle); border-radius: var(--radius);
+    color: var(--text-primary); font-family: var(--font-body); font-size: 12px; outline: none; transition: border-color 0.2s;
   }
-
-  .filter-input:focus, .filter-select:focus {
-    border-color: rgba(201,168,76,0.35);
-  }
-
+  .filter-input:focus, .filter-select:focus { border-color: rgba(201,168,76,0.35); }
   .filter-select option { background: var(--charcoal); }
 
   /* ── KANBAN ── */
-  .kanban-wrapper {
-    overflow-x: auto;
-    margin-bottom: 36px;
-    padding-bottom: 8px;
-  }
-
-  .kanban-board {
-    display: flex;
-    gap: 12px;
-    min-width: max-content;
-  }
-
-  .kanban-col {
-    width: 240px;
-    flex-shrink: 0;
-  }
-
+  .kanban-wrapper { overflow-x: auto; margin-bottom: 36px; padding-bottom: 8px; }
+  .kanban-board { display: flex; gap: 12px; min-width: max-content; }
+  .kanban-col { width: 240px; flex-shrink: 0; }
   .kanban-col-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 12px;
-    background: var(--surface);
-    border: 1px solid var(--border-subtle);
-    border-bottom: none;
-    border-radius: var(--radius) var(--radius) 0 0;
-    margin-bottom: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 12px; background: var(--surface); border: 1px solid var(--border-subtle);
+    border-bottom: none; border-radius: var(--radius) var(--radius) 0 0;
   }
-
-  .col-title {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--text-secondary);
-  }
-
-  .col-badge {
-    background: var(--charcoal-mid);
-    color: var(--text-muted);
-    font-size: 10px;
-    padding: 1px 7px;
-    border-radius: 20px;
-  }
-
+  .col-title { font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-secondary); }
+  .col-badge { background: var(--charcoal-mid); color: var(--text-muted); font-size: 10px; padding: 1px 7px; border-radius: 20px; }
   .kanban-col-body {
-    background: var(--charcoal-deep);
-    border: 1px solid var(--border-subtle);
-    border-top: none;
-    border-radius: 0 0 var(--radius) var(--radius);
-    padding: 8px;
-    min-height: 120px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    background: var(--charcoal-deep); border: 1px solid var(--border-subtle);
+    border-top: none; border-radius: 0 0 var(--radius) var(--radius);
+    padding: 8px; min-height: 120px; display: flex; flex-direction: column; gap: 8px;
   }
 
   .task-card {
-    background: var(--surface);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius);
-    padding: 11px 12px;
-    transition: border-color 0.2s, transform 0.15s;
-    cursor: default;
+    background: var(--surface); border: 1px solid var(--border-subtle);
+    border-radius: var(--radius); padding: 11px 12px;
+    transition: border-color 0.2s, transform 0.15s; cursor: pointer;
   }
-
-  .task-card:hover {
-    border-color: rgba(201,168,76,0.2);
-    transform: translateY(-1px);
-  }
-
+  .task-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
   .task-card.is-blocked { border-left: 2px solid var(--crimson-muted); }
   .task-card.is-overdue { border-left: 2px solid var(--crimson-soft); background: rgba(139,26,26,0.08); }
+  .task-card-edit-hint { font-size: 9px; color: var(--gold-dim); letter-spacing: 0.1em; text-transform: uppercase; opacity: 0; transition: opacity 0.2s; }
+  .task-card:hover .task-card-edit-hint { opacity: 1; }
 
-  .task-name {
-    font-size: 12px;
-    color: var(--text-primary);
-    line-height: 1.4;
-    margin-bottom: 8px;
-  }
-
-  .task-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    margin-bottom: 6px;
-  }
-
-  .task-tag {
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 2px 6px;
-    border-radius: 3px;
-    background: var(--charcoal-mid);
-    color: var(--text-muted);
-  }
-
+  .task-name { font-size: 12px; color: var(--text-primary); line-height: 1.4; margin-bottom: 6px; }
+  .task-meta { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 5px; align-items: center; }
+  .task-tag { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; background: var(--charcoal-mid); color: var(--text-muted); }
   .task-tag.priority-high { background: rgba(139,26,26,0.3); color: var(--crimson-soft); }
   .task-tag.priority-critical { background: rgba(163,32,32,0.4); color: #e85555; }
   .task-tag.priority-medium { background: rgba(139,100,26,0.3); color: var(--gold); }
   .task-tag.priority-low { background: rgba(74,140,92,0.2); color: #6ab882; }
 
-  .task-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 10px;
-    color: var(--text-muted);
-    margin-top: 6px;
+  /* Quick status dropdown on card */
+  .task-status-select {
+    font-size: 9px; letter-spacing: 0.08em; padding: 2px 4px;
+    background: var(--charcoal-mid); border: 1px solid var(--border-subtle);
+    border-radius: 3px; color: var(--text-muted); cursor: pointer; outline: none;
+    font-family: var(--font-body); max-width: 90px;
   }
+  .task-status-select:focus { border-color: rgba(201,168,76,0.35); }
+  .task-status-select option { background: var(--charcoal); }
 
-  .task-deadline { }
+  .task-footer { display: flex; align-items: center; justify-content: space-between; font-size: 10px; color: var(--text-muted); margin-top: 6px; }
   .task-deadline.overdue { color: var(--crimson-soft); }
-
-  .task-progress-bar {
-    height: 2px;
-    background: var(--charcoal-mid);
-    border-radius: 1px;
-    margin-top: 8px;
-    overflow: hidden;
-  }
-
-  .task-progress-fill {
-    height: 100%;
-    background: var(--gold-dim);
-    border-radius: 1px;
-    transition: width 0.4s ease;
-  }
-
+  .task-progress-bar { height: 2px; background: var(--charcoal-mid); border-radius: 1px; margin-top: 8px; overflow: hidden; }
+  .task-progress-fill { height: 100%; background: var(--gold-dim); border-radius: 1px; transition: width 0.4s ease; }
   .task-progress-fill.complete { background: #4a8c5c; }
 
   /* ── DEPARTMENT CARDS ── */
-  .dept-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 14px;
-    margin-bottom: 36px;
-  }
-
-  .dept-card {
-    background: var(--surface);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
-    padding: 18px;
-    transition: border-color 0.2s;
-  }
-
+  .dept-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-bottom: 36px; }
+  .dept-card { background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 18px; transition: border-color 0.2s; }
   .dept-card:hover { border-color: rgba(201,168,76,0.18); }
-
-  .dept-card-header {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    margin-bottom: 12px;
-  }
-
-  .dept-name {
-    font-family: var(--font-display);
-    font-size: 17px;
-    font-weight: 500;
-    color: var(--parchment-dim);
-    letter-spacing: 0.02em;
-  }
-
-  .dept-pct {
-    font-family: var(--font-display);
-    font-size: 24px;
-    font-weight: 600;
-    color: var(--gold);
-    letter-spacing: -0.01em;
-  }
-
-  .dept-progress {
-    height: 4px;
-    background: var(--charcoal-mid);
-    border-radius: 2px;
-    overflow: hidden;
-    margin-bottom: 14px;
-  }
-
-  .dept-progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--gold-dim), var(--gold));
-    border-radius: 2px;
-    transition: width 0.6s ease;
-  }
-
-  .dept-stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-  }
-
-  .dept-stat {
-    text-align: center;
-  }
-
-  .dept-stat-val {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text-primary);
-    font-family: var(--font-display);
-  }
-
-  .dept-stat-lbl {
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-top: 2px;
-  }
-
-  .dept-stat .blocked .dept-stat-val { color: var(--crimson-soft); }
+  .dept-card-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 12px; }
+  .dept-name { font-family: var(--font-display); font-size: 17px; font-weight: 500; color: var(--parchment-dim); letter-spacing: 0.02em; }
+  .dept-pct { font-family: var(--font-display); font-size: 24px; font-weight: 600; color: var(--gold); letter-spacing: -0.01em; }
+  .dept-progress { height: 4px; background: var(--charcoal-mid); border-radius: 2px; overflow: hidden; margin-bottom: 14px; }
+  .dept-progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold-dim), var(--gold)); border-radius: 2px; transition: width 0.6s ease; }
+  .dept-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .dept-stat { text-align: center; }
+  .dept-stat-val { font-size: 15px; font-weight: 600; color: var(--text-primary); font-family: var(--font-display); }
+  .dept-stat-lbl { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-top: 2px; }
 
   /* ── DEADLINES ── */
-  .deadlines-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 36px;
-  }
-
-  .deadline-section-title {
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .deadline-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-  }
-
+  .deadlines-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 36px; }
+  .deadline-section-title { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .deadline-dot { width: 6px; height: 6px; border-radius: 50%; }
   .deadline-dot.overdue { background: var(--crimson-soft); }
   .deadline-dot.soon { background: var(--gold); }
-
   .deadline-list { display: flex; flex-direction: column; gap: 8px; }
-
-  .deadline-item {
-    background: var(--surface);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius);
-    padding: 12px 14px;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 8px;
-    align-items: start;
-  }
-
+  .deadline-item { background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius); padding: 12px 14px; display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: start; }
   .deadline-item.overdue { border-left: 2px solid var(--crimson-soft); }
   .deadline-item.soon { border-left: 2px solid var(--gold-dim); }
-
-  .deadline-task-name {
-    font-size: 12px;
-    color: var(--text-primary);
-    line-height: 1.3;
-    margin-bottom: 4px;
-  }
-
-  .deadline-meta {
-    font-size: 10px;
-    color: var(--text-muted);
-  }
-
-  .deadline-date {
-    font-size: 11px;
-    text-align: right;
-    white-space: nowrap;
-  }
-
+  .deadline-task-name { font-size: 12px; color: var(--text-primary); line-height: 1.3; margin-bottom: 4px; }
+  .deadline-meta { font-size: 10px; color: var(--text-muted); }
+  .deadline-date { font-size: 11px; text-align: right; white-space: nowrap; }
   .deadline-date.overdue { color: var(--crimson-soft); }
   .deadline-date.soon { color: var(--gold); }
 
   /* ── MARKETING ── */
-  .marketing-kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: 12px;
-    margin-bottom: 24px;
-  }
-
-  .marketing-table-wrap {
-    overflow-x: auto;
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
-    margin-bottom: 28px;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 12px;
-  }
-
-  thead th {
-    padding: 11px 14px;
-    text-align: left;
-    font-size: 9px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    background: var(--surface);
-    border-bottom: 1px solid var(--border-subtle);
-    white-space: nowrap;
-  }
-
-  tbody tr { border-bottom: 1px solid var(--border-subtle); transition: background 0.15s; }
+  .marketing-kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .marketing-table-wrap { overflow-x: auto; border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); margin-bottom: 28px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  thead th { padding: 11px 14px; text-align: left; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); background: var(--surface); border-bottom: 1px solid var(--border-subtle); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border-subtle); transition: background 0.15s; cursor: pointer; }
   tbody tr:last-child { border-bottom: none; }
-  tbody tr:hover { background: rgba(201,168,76,0.03); }
-
-  tbody td {
-    padding: 10px 14px;
-    color: var(--text-secondary);
-    vertical-align: top;
-  }
-
+  tbody tr:hover { background: rgba(201,168,76,0.05); }
+  tbody td { padding: 10px 14px; color: var(--text-secondary); vertical-align: top; }
   tbody td:first-child { color: var(--text-primary); }
 
-  .status-pill {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 12px;
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
+  .status-pill { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
   .status-complete { background: rgba(74,140,92,0.2); color: #6ab882; }
   .status-progress { background: rgba(201,168,76,0.15); color: var(--gold); }
   .status-notstarted { background: rgba(107,107,114,0.2); color: var(--ash-light); }
@@ -754,122 +284,126 @@
   .status-draft { background: rgba(107,107,114,0.2); color: var(--ash-light); }
 
   /* ── CHARTS ── */
-  .charts-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 36px;
-  }
-
-  .chart-card {
-    background: var(--surface);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
-    padding: 20px;
-  }
-
-  .chart-title {
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 16px;
-  }
-
-  .chart-canvas-wrap {
-    position: relative;
-    height: 220px;
-  }
-
+  .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 36px; }
+  .chart-card { background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 20px; }
+  .chart-title { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px; }
+  .chart-canvas-wrap { position: relative; height: 220px; }
   .chart-canvas-wrap.bar-chart { height: 260px; }
 
+  /* ── ACTIVITY LOG ── */
+  .activity-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 36px; }
+  .activity-item {
+    background: var(--surface); border: 1px solid var(--border-subtle);
+    border-radius: var(--radius); padding: 12px 16px;
+    display: grid; grid-template-columns: 120px 100px 1fr 1fr 1fr; gap: 12px; align-items: center;
+    font-size: 12px;
+  }
+  .activity-item:hover { background: var(--surface-raised); }
+  .activity-ts { font-size: 10px; color: var(--text-muted); white-space: nowrap; }
+  .activity-user { color: var(--gold); font-size: 11px; }
+  .activity-field { color: var(--text-secondary); }
+  .activity-val-old { color: var(--text-muted); text-decoration: line-through; font-size: 11px; }
+  .activity-val-new { color: var(--gold-light); font-size: 11px; }
+
+  /* ── DRAWER / MODAL ── */
+  .drawer-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.65);
+    z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.25s;
+  }
+  .drawer-overlay.open { opacity: 1; pointer-events: all; }
+
+  .drawer {
+    position: fixed; top: 0; right: 0; bottom: 0; width: 480px; max-width: 100vw;
+    background: var(--charcoal); border-left: 1px solid var(--border);
+    z-index: 101; transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .drawer.open { transform: translateX(0); }
+
+  .drawer-header {
+    padding: 22px 24px 18px;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex; align-items: baseline; justify-content: space-between; flex-shrink: 0;
+  }
+  .drawer-title { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--parchment-dim); letter-spacing: 0.03em; }
+  .drawer-close {
+    background: none; border: none; color: var(--text-muted); font-size: 20px; cursor: pointer;
+    padding: 4px 8px; border-radius: var(--radius); transition: color 0.2s;
+  }
+  .drawer-close:hover { color: var(--text-primary); }
+
+  .drawer-body { flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-label { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); }
+  .form-input, .form-select, .form-textarea {
+    padding: 9px 12px; background: var(--charcoal-mid); border: 1px solid var(--border-subtle);
+    border-radius: var(--radius); color: var(--text-primary); font-family: var(--font-body); font-size: 13px; outline: none; transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: rgba(201,168,76,0.4); }
+  .form-select option { background: var(--charcoal-deep); }
+  .form-textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-error { font-size: 10px; color: var(--crimson-soft); margin-top: 2px; }
+
+  .drawer-footer {
+    padding: 16px 24px; border-top: 1px solid var(--border-subtle);
+    display: flex; gap: 10px; justify-content: flex-end; flex-shrink: 0;
+  }
+  .btn-cancel {
+    padding: 9px 20px; background: transparent; border: 1px solid var(--border-subtle);
+    border-radius: var(--radius); color: var(--text-muted); font-family: var(--font-body);
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-cancel:hover { border-color: var(--ash); color: var(--text-secondary); }
+  .btn-save {
+    padding: 9px 22px; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.4);
+    border-radius: var(--radius); color: var(--gold); font-family: var(--font-body);
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .btn-save:hover:not(:disabled) { background: rgba(201,168,76,0.2); }
+  .btn-save:disabled { opacity: 0.45; cursor: not-allowed; }
+  .btn-save .save-spinner {
+    width: 12px; height: 12px; border: 1.5px solid rgba(201,168,76,0.3);
+    border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; display: none;
+  }
+  .btn-save.saving .save-spinner { display: inline-block; }
+  .btn-save.saving .save-label { opacity: 0.6; }
+
+  /* ── TOAST ── */
+  #toastContainer { position: fixed; bottom: 28px; right: 28px; z-index: 200; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
+  .toast {
+    padding: 12px 18px; border-radius: var(--radius); font-size: 12px; letter-spacing: 0.04em;
+    display: flex; align-items: center; gap: 10px; pointer-events: all;
+    animation: toastIn 0.3s ease; max-width: 340px;
+    border: 1px solid transparent;
+  }
+  .toast.success { background: rgba(74,140,92,0.2); border-color: rgba(74,140,92,0.35); color: #8cd4a4; }
+  .toast.error { background: rgba(139,26,26,0.25); border-color: rgba(163,32,32,0.45); color: var(--crimson-soft); }
+  .toast.info { background: rgba(74,108,140,0.2); border-color: rgba(74,108,140,0.35); color: #8ab8d4; }
+  .toast-icon { font-size: 14px; }
+  @keyframes toastIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes toastOut { from { opacity: 1; } to { opacity: 0; transform: translateY(8px); } }
+
   /* ── LOADING / ERROR ── */
-  .loading-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 80px 20px;
-    gap: 16px;
-  }
-
-  .loading-spinner {
-    width: 36px; height: 36px;
-    border: 2px solid var(--border-subtle);
-    border-top-color: var(--gold);
-    border-radius: 50%;
-    animation: spin 0.9s linear infinite;
-  }
-
+  .loading-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px; gap: 16px; }
+  .loading-spinner { width: 36px; height: 36px; border: 2px solid var(--border-subtle); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.9s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
-
-  .loading-text {
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-  }
-
-  .error-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 80px 20px;
-    gap: 14px;
-    text-align: center;
-  }
-
-  .error-icon {
-    font-size: 32px;
-    color: var(--crimson-soft);
-    opacity: 0.6;
-  }
-
-  .error-title {
-    font-family: var(--font-display);
-    font-size: 20px;
-    color: var(--text-secondary);
-  }
-
-  .error-msg {
-    font-size: 12px;
-    color: var(--text-muted);
-    max-width: 360px;
-  }
-
-  .btn-retry {
-    margin-top: 8px;
-    padding: 8px 20px;
-    background: transparent;
-    border: 1px solid var(--crimson-muted);
-    border-radius: var(--radius);
-    color: var(--crimson-soft);
-    font-family: var(--font-body);
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
+  .loading-text { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
+  .error-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px; gap: 14px; text-align: center; }
+  .error-icon { font-size: 32px; color: var(--crimson-soft); opacity: 0.6; }
+  .error-title { font-family: var(--font-display); font-size: 20px; color: var(--text-secondary); }
+  .error-msg { font-size: 12px; color: var(--text-muted); max-width: 360px; }
+  .btn-retry { margin-top: 8px; padding: 8px 20px; background: transparent; border: 1px solid var(--crimson-muted); border-radius: var(--radius); color: var(--crimson-soft); font-family: var(--font-body); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
   .btn-retry:hover { background: rgba(139,26,26,0.15); }
+  .empty-state { padding: 40px 20px; text-align: center; color: var(--text-muted); font-size: 12px; letter-spacing: 0.08em; }
 
-  .empty-state {
-    padding: 40px 20px;
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 12px;
-    letter-spacing: 0.08em;
-  }
-
-  /* ── SCROLLBAR ── */
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: var(--charcoal-deep); }
   ::-webkit-scrollbar-thumb { background: var(--smoke); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--ash); }
 
-  /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
     .site-header { flex-direction: column; }
     .header-controls { align-items: flex-start; }
@@ -877,26 +411,20 @@
     .deadlines-grid { grid-template-columns: 1fr; }
     .charts-grid { grid-template-columns: 1fr; }
     .dept-grid { grid-template-columns: 1fr; }
-    .dept-stats { grid-template-columns: repeat(4, 1fr); }
     .brand { flex-direction: column; gap: 12px; }
     .brand-monogram { border-right: none; padding-right: 0; border-bottom: 1px solid rgba(201,168,76,0.2); padding-bottom: 12px; flex-direction: row; gap: 12px; align-items: center; }
     .filters-bar { flex-direction: column; }
     .filter-group { min-width: unset; }
+    .drawer { width: 100vw; }
+    .activity-item { grid-template-columns: 1fr 1fr; }
+    .form-row { grid-template-columns: 1fr; }
   }
-
   @media (max-width: 480px) {
     .kpi-grid { grid-template-columns: 1fr 1fr; }
     .dept-stats { grid-template-columns: repeat(2, 1fr); }
   }
-
   .hidden { display: none !important; }
-
-  /* Divider line */
-  .divider {
-    border: none;
-    border-top: 1px solid var(--border-subtle);
-    margin: 28px 0;
-  }
+  .divider { border: none; border-top: 1px solid var(--border-subtle); margin: 28px 0; }
 </style>
 </head>
 <body>
@@ -923,13 +451,16 @@
         <span id="syncLabel">Idle</span>
       </div>
       <div class="sync-info">Last synced: <span class="sync-time" id="lastSynced">—</span></div>
-      <button class="btn-refresh" id="refreshBtn" onclick="loadAll(true)">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M13.5 8A5.5 5.5 0 1 1 8 2.5" stroke-linecap="round"/>
-          <polyline points="8,2.5 11,1 11,4" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        Refresh
-      </button>
+      <div class="header-btn-row">
+        <button class="btn-new-task" onclick="openNewTaskDrawer()">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="8" y1="2" x2="8" y2="14"/><line x1="2" y1="8" x2="14" y2="8"/></svg>
+          New Task
+        </button>
+        <button class="btn-refresh" id="refreshBtn" onclick="loadAll(true)">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 8A5.5 5.5 0 1 1 8 2.5" stroke-linecap="round"/><polyline points="8,2.5 11,1 11,4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Refresh
+        </button>
+      </div>
     </div>
   </header>
 
@@ -942,7 +473,7 @@
     <div class="error-state hidden" id="globalError">
       <div class="error-icon">⚠</div>
       <div class="error-title">Unable to load dashboard data</div>
-      <div class="error-msg" id="errorMsg">The data source could not be reached. Please check your connection and try again.</div>
+      <div class="error-msg" id="errorMsg">The data source could not be reached.</div>
       <button class="btn-retry" onclick="loadAll(true)">Retry</button>
     </div>
     <div id="dashContent" class="hidden">
@@ -955,6 +486,7 @@
         <button class="tab-btn" onclick="switchTab('deadlines', this)">Deadlines</button>
         <button class="tab-btn" onclick="switchTab('marketing', this)">Marketing</button>
         <button class="tab-btn" onclick="switchTab('analytics', this)">Analytics</button>
+        <button class="tab-btn" id="activityTabBtn" onclick="switchTab('activity', this)">Activity</button>
       </nav>
 
       <!-- FILTERS -->
@@ -965,56 +497,38 @@
         </div>
         <div class="filter-group">
           <label for="deptFilter">Dept</label>
-          <select id="deptFilter" class="filter-select" onchange="applyFilters()">
-            <option value="">All</option>
-          </select>
+          <select id="deptFilter" class="filter-select" onchange="applyFilters()"><option value="">All</option></select>
         </div>
         <div class="filter-group">
           <label for="ownerFilter">Owner</label>
-          <select id="ownerFilter" class="filter-select" onchange="applyFilters()">
-            <option value="">All</option>
-          </select>
+          <select id="ownerFilter" class="filter-select" onchange="applyFilters()"><option value="">All</option></select>
         </div>
         <div class="filter-group">
           <label for="statusFilter">Status</label>
           <select id="statusFilter" class="filter-select" onchange="applyFilters()">
             <option value="">All</option>
-            <option value="Not Started">Not Started</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Waiting">Waiting</option>
-            <option value="Blocked">Blocked</option>
-            <option value="Review">Review</option>
-            <option value="Complete">Complete</option>
+            <option>Not Started</option><option>In Progress</option><option>Waiting</option>
+            <option>Blocked</option><option>Review</option><option>Complete</option>
           </select>
         </div>
         <div class="filter-group">
           <label for="priorityFilter">Priority</label>
           <select id="priorityFilter" class="filter-select" onchange="applyFilters()">
             <option value="">All</option>
-            <option value="Critical">Critical</option>
-            <option value="High">High</option>
-            <option value="Medium">Medium</option>
-            <option value="Low">Low</option>
+            <option>Critical</option><option>High</option><option>Medium</option><option>Low</option>
           </select>
         </div>
       </div>
 
-      <!-- ── OVERVIEW TAB ── -->
+      <!-- OVERVIEW -->
       <div id="tab-overview" class="tab-panel active">
-        <div class="section-header">
-          <span class="section-title">Project Overview</span>
-          <span class="section-rule"></span>
-        </div>
+        <div class="section-header"><span class="section-title">Project Overview</span><span class="section-rule"></span></div>
         <div class="kpi-grid" id="kpiGrid"></div>
-
-        <div class="section-header">
-          <span class="section-title">Department Summary</span>
-          <span class="section-rule"></span>
-        </div>
+        <div class="section-header"><span class="section-title">Department Summary</span><span class="section-rule"></span></div>
         <div class="dept-grid" id="deptGridOverview"></div>
       </div>
 
-      <!-- ── TASK BOARD TAB ── -->
+      <!-- TASK BOARD -->
       <div id="tab-tasks" class="tab-panel">
         <div class="section-header">
           <span class="section-title">Task Board</span>
@@ -1026,98 +540,76 @@
         </div>
       </div>
 
-      <!-- ── DEPARTMENTS TAB ── -->
+      <!-- DEPARTMENTS -->
       <div id="tab-departments" class="tab-panel">
-        <div class="section-header">
-          <span class="section-title">Department Progress</span>
-          <span class="section-rule"></span>
-        </div>
+        <div class="section-header"><span class="section-title">Department Progress</span><span class="section-rule"></span></div>
         <div class="dept-grid" id="deptGridFull"></div>
       </div>
 
-      <!-- ── DEADLINES TAB ── -->
+      <!-- DEADLINES -->
       <div id="tab-deadlines" class="tab-panel">
-        <div class="section-header">
-          <span class="section-title">Deadlines & Alerts</span>
-          <span class="section-rule"></span>
-        </div>
+        <div class="section-header"><span class="section-title">Deadlines & Alerts</span><span class="section-rule"></span></div>
         <div class="deadlines-grid">
           <div>
-            <div class="deadline-section-title">
-              <span class="deadline-dot overdue"></span>
-              Overdue Tasks
-            </div>
+            <div class="deadline-section-title"><span class="deadline-dot overdue"></span>Overdue Tasks</div>
             <div class="deadline-list" id="overdueList"></div>
           </div>
           <div>
-            <div class="deadline-section-title">
-              <span class="deadline-dot soon"></span>
-              Due Soon
-            </div>
+            <div class="deadline-section-title"><span class="deadline-dot soon"></span>Due Soon</div>
             <div class="deadline-list" id="dueSoonList"></div>
           </div>
         </div>
       </div>
 
-      <!-- ── MARKETING TAB ── -->
+      <!-- MARKETING -->
       <div id="tab-marketing" class="tab-panel">
-        <div class="section-header">
-          <span class="section-title">Marketing Strategy</span>
-          <span class="section-rule"></span>
-        </div>
+        <div class="section-header"><span class="section-title">Marketing Strategy</span><span class="section-rule"></span></div>
         <div class="marketing-kpi-grid" id="marketingKpis"></div>
         <div class="section-header" style="margin-top:24px">
-          <span class="section-title">Upcoming & Scheduled</span>
+          <span class="section-title">All Marketing Items</span>
           <span class="section-rule"></span>
+          <span style="font-size:10px;color:var(--text-muted);letter-spacing:0.1em">Click row to edit</span>
         </div>
         <div class="marketing-table-wrap">
-          <table id="marketingTable">
-            <thead>
-              <tr>
-                <th>Title / Content</th>
-                <th>Channel</th>
-                <th>Type</th>
-                <th>Owner</th>
-                <th>Publish Date</th>
-                <th>Status</th>
-              </tr>
-            </thead>
+          <table>
+            <thead><tr>
+              <th>Title / Content</th><th>Channel</th><th>Type</th><th>Owner</th><th>Publish Date</th><th>Status</th>
+            </tr></thead>
             <tbody id="marketingTableBody"></tbody>
           </table>
         </div>
       </div>
 
-      <!-- ── ANALYTICS TAB ── -->
+      <!-- ANALYTICS -->
       <div id="tab-analytics" class="tab-panel">
-        <div class="section-header">
-          <span class="section-title">Analytics</span>
-          <span class="section-rule"></span>
-        </div>
+        <div class="section-header"><span class="section-title">Analytics</span><span class="section-rule"></span></div>
         <div class="charts-grid">
           <div class="chart-card">
             <div class="chart-title">Tasks by Status</div>
-            <div class="chart-canvas-wrap">
-              <canvas id="chartStatus"></canvas>
-            </div>
+            <div class="chart-canvas-wrap"><canvas id="chartStatus"></canvas></div>
           </div>
           <div class="chart-card">
             <div class="chart-title">Tasks by Priority</div>
-            <div class="chart-canvas-wrap">
-              <canvas id="chartPriority"></canvas>
-            </div>
+            <div class="chart-canvas-wrap"><canvas id="chartPriority"></canvas></div>
           </div>
-          <div class="chart-card" style="grid-column: span 2;">
+          <div class="chart-card" style="grid-column:span 2">
             <div class="chart-title">Tasks by Department</div>
-            <div class="chart-canvas-wrap bar-chart">
-              <canvas id="chartDept"></canvas>
-            </div>
+            <div class="chart-canvas-wrap bar-chart"><canvas id="chartDept"></canvas></div>
           </div>
-          <div class="chart-card" style="grid-column: span 2;">
+          <div class="chart-card" style="grid-column:span 2">
             <div class="chart-title">Marketing by Status</div>
-            <div class="chart-canvas-wrap">
-              <canvas id="chartMarketing"></canvas>
-            </div>
+            <div class="chart-canvas-wrap"><canvas id="chartMarketing"></canvas></div>
           </div>
+        </div>
+      </div>
+
+      <!-- ACTIVITY -->
+      <div id="tab-activity" class="tab-panel">
+        <div class="section-header"><span class="section-title">Recent Activity</span><span class="section-rule"></span></div>
+        <div id="activityContent">
+          <div class="loading-state" id="activityLoading" style="padding:40px"><div class="loading-spinner"></div><div class="loading-text">Loading activity…</div></div>
+          <div class="activity-list hidden" id="activityList"></div>
+          <div class="empty-state hidden" id="activityEmpty">No recent activity found.</div>
         </div>
       </div>
 
@@ -1126,6 +618,138 @@
 
 </div><!-- /app -->
 
+<!-- ── EDIT TASK DRAWER ── -->
+<div class="drawer-overlay" id="taskDrawerOverlay" onclick="closeTaskDrawer()"></div>
+<div class="drawer" id="taskDrawer" role="dialog" aria-label="Edit Task">
+  <div class="drawer-header">
+    <span class="drawer-title" id="taskDrawerTitle">Edit Task</span>
+    <button class="drawer-close" onclick="closeTaskDrawer()">✕</button>
+  </div>
+  <div class="drawer-body">
+    <input type="hidden" id="editTaskId">
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Task Name *</label>
+        <input type="text" class="form-input" id="editTaskName">
+        <span class="form-error hidden" id="errTaskName">Required</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Department *</label>
+        <select class="form-select" id="editTaskDept"></select>
+        <span class="form-error hidden" id="errTaskDept">Required</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Description</label>
+      <textarea class="form-textarea" id="editTaskDesc" placeholder="Task description…"></textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Owner</label>
+        <select class="form-select" id="editTaskOwner"></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Priority *</label>
+        <select class="form-select" id="editTaskPriority"></select>
+        <span class="form-error hidden" id="errTaskPriority">Required</span>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Status *</label>
+        <select class="form-select" id="editTaskStatus"></select>
+        <span class="form-error hidden" id="errTaskStatus">Required</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Deadline</label>
+        <input type="date" class="form-input" id="editTaskDeadline">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">% Complete</label>
+        <input type="number" class="form-input" id="editTaskPct" min="0" max="100" placeholder="0">
+        <span class="form-error hidden" id="errTaskPct">0–100</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Notes</label>
+      <textarea class="form-textarea" id="editTaskNotes" placeholder="Notes…"></textarea>
+    </div>
+  </div>
+  <div class="drawer-footer">
+    <button class="btn-cancel" onclick="closeTaskDrawer()">Cancel</button>
+    <button class="btn-save" id="saveTaskBtn" onclick="handleSaveTask()">
+      <span class="save-spinner"></span>
+      <span class="save-label">Save Changes</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── EDIT MARKETING DRAWER ── -->
+<div class="drawer-overlay" id="mktDrawerOverlay" onclick="closeMktDrawer()"></div>
+<div class="drawer" id="mktDrawer" role="dialog" aria-label="Edit Marketing Item">
+  <div class="drawer-header">
+    <span class="drawer-title">Edit Marketing Item</span>
+    <button class="drawer-close" onclick="closeMktDrawer()">✕</button>
+  </div>
+  <div class="drawer-body">
+    <input type="hidden" id="editMktId">
+    <div class="form-group">
+      <label class="form-label">Post / Title</label>
+      <input type="text" class="form-input" id="editMktPost">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Content</label>
+      <textarea class="form-textarea" id="editMktContent"></textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Channel</label>
+        <select class="form-select" id="editMktChannel"></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Content Type</label>
+        <select class="form-select" id="editMktType"></select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Owner</label>
+        <select class="form-select" id="editMktOwner"></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Publish Date</label>
+        <input type="date" class="form-input" id="editMktDate">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Priority</label>
+        <select class="form-select" id="editMktPriority"></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Status</label>
+        <select class="form-select" id="editMktStatus"></select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Notes</label>
+      <textarea class="form-textarea" id="editMktNotes"></textarea>
+    </div>
+  </div>
+  <div class="drawer-footer">
+    <button class="btn-cancel" onclick="closeMktDrawer()">Cancel</button>
+    <button class="btn-save" id="saveMktBtn" onclick="handleSaveMkt()">
+      <span class="save-spinner"></span>
+      <span class="save-label">Save Changes</span>
+    </button>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toastContainer"></div>
+
 <script>
 'use strict';
 
@@ -1133,64 +757,86 @@ const BASE_URL = 'https://script.google.com/macros/s/AKfycbwnRAa7Wh89K9ruaX_Iav-
 
 let dashData = null;
 let marketingData = null;
+let lookupsData = null;
 let allTasks = [];
 let filteredTasks = [];
 let charts = {};
 let autoRefreshTimer = null;
+let selectedTask = null;
+let selectedMktItem = null;
+let isNewTask = false;
 
-// ── Colour palette for charts ──
+// ── Default fallbacks ──
+const DEFAULT_STATUSES = ['Not Started','In Progress','Waiting','Blocked','Review','Complete'];
+const DEFAULT_PRIORITIES = ['Critical','High','Medium','Low'];
+const DEFAULT_CHANNELS = ['Instagram','Facebook','WhatsApp','Email','Website','Print','TikTok','LinkedIn','Twitter/X'];
+const DEFAULT_CONTENT_TYPES = ['Post','Story','Reel','Video','Graphic','Email','Flyer','Blog','Press Release'];
+
 const PALETTE = {
-  gold: '#c9a84c',
-  goldLight: '#d4b866',
-  crimson: '#a32020',
-  crimsonSoft: '#c0362e',
-  maroon: '#6b1515',
-  ash: '#6b6b72',
-  ashLight: '#8a8a92',
-  green: '#4a8c5c',
-  blue: '#4a6c8c',
-  purple: '#6a4a8c',
-  teal: '#4a8a8c',
-  smoke: '#3a3a40',
+  gold:'#c9a84c', goldLight:'#d4b866', crimson:'#a32020', crimsonSoft:'#c0362e',
+  maroon:'#6b1515', ash:'#6b6b72', ashLight:'#8a8a92', green:'#4a8c5c',
+  blue:'#4a6c8c', purple:'#6a4a8c', teal:'#4a8a8c', smoke:'#3a3a40',
 };
-
 const STATUS_COLOURS = {
-  'Not Started': PALETTE.ash,
-  'In Progress': PALETTE.gold,
-  'Waiting': PALETTE.blue,
-  'Blocked': PALETTE.crimson,
-  'Review': PALETTE.purple,
-  'Complete': PALETTE.green,
-  'Overdue': PALETTE.crimsonSoft,
+  'Not Started':PALETTE.ash,'In Progress':PALETTE.gold,'Waiting':PALETTE.blue,
+  'Blocked':PALETTE.crimson,'Review':PALETTE.purple,'Complete':PALETTE.green,'Overdue':PALETTE.crimsonSoft,
 };
+const PRIORITY_COLOURS = { 'Critical':'#e85555','High':PALETTE.crimsonSoft,'Medium':PALETTE.gold,'Low':PALETTE.green };
 
-const PRIORITY_COLOURS = {
-  'Critical': '#e85555',
-  'High': PALETTE.crimsonSoft,
-  'Medium': PALETTE.gold,
-  'Low': PALETTE.green,
-};
-
-// ── Fetch helpers ──
-async function fetchEndpoint(action) {
+// ── API helpers ──
+async function apiGet(action) {
   const r = await fetch(`${BASE_URL}?action=${action}`);
   if (!r.ok) throw new Error(`HTTP ${r.status}`);
   const text = await r.text();
-  try { return JSON.parse(text); } catch { throw new Error('Invalid JSON'); }
+  try { return JSON.parse(text); } catch { throw new Error('Invalid JSON from ' + action); }
 }
 
+async function apiPost(payload) {
+  const r = await fetch(BASE_URL, {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  });
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  const text = await r.text();
+  try { return JSON.parse(text); } catch { return { success: true }; }
+}
+
+async function saveTaskChanges(taskId, changes) {
+  const promises = Object.entries(changes).map(([field, value]) =>
+    apiPost({ action: 'updateTaskField', taskId, field, value })
+  );
+  const results = await Promise.all(promises);
+  return results;
+}
+
+async function createNewTask(task) {
+  return apiPost({ action: 'createTask', task });
+}
+
+async function saveMarketingChanges(campaignId, changes) {
+  const promises = Object.entries(changes).map(([field, value]) =>
+    apiPost({ action: 'updateMarketingField', campaignId, field, value })
+  );
+  return Promise.all(promises);
+}
+
+async function loadActivityLog() {
+  return apiGet('activity');
+}
+
+// ── Load all data ──
 async function loadAll(manual = false) {
   setSyncing(true);
   try {
-    const [dash, mkt] = await Promise.all([
-      fetchEndpoint('dashboard'),
-      fetchEndpoint('marketing').catch(() => null),
+    const [dash, mkt, lookups] = await Promise.all([
+      apiGet('dashboard'),
+      apiGet('marketing').catch(() => null),
+      apiGet('lookups').catch(() => null),
     ]);
 
     dashData = dash;
     marketingData = mkt;
-
-    // Build flat task list from dashboard data
+    lookupsData = lookups;
     allTasks = extractTasks(dash);
     filteredTasks = [...allTasks];
 
@@ -1199,6 +845,7 @@ async function loadAll(manual = false) {
     hide('globalError');
 
     populateFilters();
+    populateDrawerSelects();
     renderKPIs();
     renderDepartments();
     renderKanban();
@@ -1209,13 +856,12 @@ async function loadAll(manual = false) {
 
     document.getElementById('lastSynced').textContent = new Date().toLocaleTimeString('en-GB');
     setSyncing(false, true);
-
     if (!manual) scheduleRefresh();
-  } catch (err) {
+  } catch(err) {
     hide('globalLoading');
     hide('dashContent');
     show('globalError');
-    document.getElementById('errorMsg').textContent = `Error: ${err.message}. Please check your connection and try again.`;
+    document.getElementById('errorMsg').textContent = `Error: ${err.message}`;
     setSyncing(false);
   }
 }
@@ -1233,33 +879,39 @@ function setSyncing(active, done = false) {
   else { dot.className = 'sync-dot'; label.textContent = 'Error'; }
 }
 
-// ── Extract tasks from dashboard payload ──
 function extractTasks(data) {
-  // Try common shapes
   if (Array.isArray(data)) return data;
-  if (data.tasks && Array.isArray(data.tasks)) return data.tasks;
-  if (data.data && Array.isArray(data.data)) return data.data;
-  // Try to collect from departmentSummary if tasks not top-level
-  if (data.taskDetails && Array.isArray(data.taskDetails)) return data.taskDetails;
-  if (data.allTasks && Array.isArray(data.allTasks)) return data.allTasks;
-  // Flatten from departments
-  if (data.departments) {
+  if (data && data.tasks && Array.isArray(data.tasks)) return data.tasks;
+  if (data && data.data && Array.isArray(data.data)) return data.data;
+  if (data && data.taskDetails && Array.isArray(data.taskDetails)) return data.taskDetails;
+  if (data && data.allTasks && Array.isArray(data.allTasks)) return data.allTasks;
+  if (data && data.departments) {
     const arr = [];
-    Object.values(data.departments).forEach(d => {
-      if (d.tasks) arr.push(...d.tasks);
-    });
+    Object.values(data.departments).forEach(d => { if (d.tasks) arr.push(...d.tasks); });
     if (arr.length) return arr;
   }
   return [];
 }
 
+// ── Lookup helpers ──
+function getLookup(key, fallback) {
+  if (!lookupsData) return fallback;
+  const v = lookupsData[key] || lookupsData[key.toLowerCase()];
+  if (Array.isArray(v) && v.length) return v;
+  return fallback;
+}
+
+function getLookupDepts() { return getLookup('departments', [...new Set(allTasks.map(t => norm(t.department||t.dept||t.Department)).filter(Boolean))].sort()); }
+function getLookupStatuses() { return getLookup('statuses', DEFAULT_STATUSES); }
+function getLookupPriorities() { return getLookup('priorities', DEFAULT_PRIORITIES); }
+function getLookupOwners() { return getLookup('people', getLookup('owners', [...new Set(allTasks.map(t => norm(t.owner||t.Owner||t.assignee)).filter(Boolean))].sort())); }
+function getLookupChannels() { return getLookup('channels', DEFAULT_CHANNELS); }
+function getLookupContentTypes() { return getLookup('contentTypes', getLookup('content_types', DEFAULT_CONTENT_TYPES)); }
+
 // ── Populate filter dropdowns ──
 function populateFilters() {
-  const depts = [...new Set(allTasks.map(t => norm(t.department || t.dept || t.Department)).filter(Boolean))].sort();
-  const owners = [...new Set(allTasks.map(t => norm(t.owner || t.Owner || t.assignee)).filter(Boolean))].sort();
-
-  fillSelect('deptFilter', depts);
-  fillSelect('ownerFilter', owners);
+  fillSelect('deptFilter', getLookupDepts());
+  fillSelect('ownerFilter', getLookupOwners());
 }
 
 function fillSelect(id, values) {
@@ -1268,13 +920,34 @@ function fillSelect(id, values) {
   while (sel.options.length > 1) sel.remove(1);
   values.forEach(v => {
     const o = document.createElement('option');
-    o.value = v; o.textContent = v;
-    sel.appendChild(o);
+    o.value = v; o.textContent = v; sel.appendChild(o);
   });
-  sel.value = cur;
+  if (cur) sel.value = cur;
 }
 
-function norm(v) { return v ? String(v).trim() : ''; }
+function fillSelectFull(id, values, allowBlank = true) {
+  const sel = document.getElementById(id);
+  if (!sel) return;
+  sel.innerHTML = '';
+  if (allowBlank) { const o = document.createElement('option'); o.value = ''; o.textContent = '—'; sel.appendChild(o); }
+  values.forEach(v => {
+    const o = document.createElement('option');
+    o.value = v; o.textContent = v; sel.appendChild(o);
+  });
+}
+
+// ── Populate drawer selects with lookup values ──
+function populateDrawerSelects() {
+  fillSelectFull('editTaskDept', getLookupDepts(), false);
+  fillSelectFull('editTaskOwner', getLookupOwners());
+  fillSelectFull('editTaskPriority', getLookupPriorities(), false);
+  fillSelectFull('editTaskStatus', getLookupStatuses(), false);
+  fillSelectFull('editMktChannel', getLookupChannels());
+  fillSelectFull('editMktType', getLookupContentTypes());
+  fillSelectFull('editMktOwner', getLookupOwners());
+  fillSelectFull('editMktPriority', getLookupPriorities());
+  fillSelectFull('editMktStatus', [...getLookupStatuses(), 'Published', 'Scheduled', 'Draft'].filter((v,i,a) => a.indexOf(v)===i));
+}
 
 // ── Filters ──
 function applyFilters() {
@@ -1285,17 +958,12 @@ function applyFilters() {
   const priority = document.getElementById('priorityFilter').value;
 
   filteredTasks = allTasks.filter(t => {
-    const name = norm(t.task || t.name || t.taskName || t.title || t.Task || '').toLowerCase();
-    const tDept = norm(t.department || t.dept || t.Department);
-    const tOwner = norm(t.owner || t.Owner || t.assignee);
-    const tStatus = norm(t.status || t.Status);
-    const tPriority = norm(t.priority || t.Priority);
-
+    const name = norm(t.task||t.name||t.taskName||t.title||t.Task||'').toLowerCase();
     if (search && !name.includes(search)) return false;
-    if (dept && tDept !== dept) return false;
-    if (owner && tOwner !== owner) return false;
-    if (status && tStatus !== status) return false;
-    if (priority && tPriority !== priority) return false;
+    if (dept && norm(t.department||t.dept||t.Department) !== dept) return false;
+    if (owner && norm(t.owner||t.Owner||t.assignee) !== owner) return false;
+    if (status && norm(t.status||t.Status) !== status) return false;
+    if (priority && norm(t.priority||t.Priority) !== priority) return false;
     return true;
   });
 
@@ -1307,134 +975,110 @@ function applyFilters() {
 function renderKPIs() {
   const grid = document.getElementById('kpiGrid');
   grid.innerHTML = '';
-
   let kpis;
   if (dashData && dashData.summary) {
     const s = dashData.summary;
     kpis = [
-      { label: 'Total Tasks', value: s.totalTasks ?? s.total ?? allTasks.length },
-      { label: 'Complete', value: s.completeTasks ?? s.complete ?? countStatus('Complete') },
-      { label: 'In Progress', value: s.inProgressTasks ?? s.inProgress ?? countStatus('In Progress') },
-      { label: 'Blocked', value: s.blockedTasks ?? s.blocked ?? countStatus('Blocked'), accent: 'crimson' },
-      { label: 'Overdue', value: s.overdueTasks ?? s.overdue ?? countOverdue(), accent: 'crimson' },
-      { label: 'Due Soon', value: s.dueSoonTasks ?? s.dueSoon ?? countDueSoon() },
-      { label: 'Completion', value: formatPct(s.completionPct ?? s.completion ?? calcCompletion()) + '%', accent: 'gold' },
+      { label:'Total Tasks', value: s.totalTasks??s.total??allTasks.length },
+      { label:'Complete', value: s.completeTasks??s.complete??countStatus('Complete') },
+      { label:'In Progress', value: s.inProgressTasks??s.inProgress??countStatus('In Progress') },
+      { label:'Blocked', value: s.blockedTasks??s.blocked??countStatus('Blocked'), accent:'crimson' },
+      { label:'Overdue', value: s.overdueTasks??s.overdue??countOverdue(), accent:'crimson' },
+      { label:'Due Soon', value: s.dueSoonTasks??s.dueSoon??countDueSoon() },
+      { label:'Completion', value: formatPct(s.completionPct??s.completion??calcCompletion())+'%', accent:'gold' },
     ];
   } else {
     kpis = [
-      { label: 'Total Tasks', value: allTasks.length },
-      { label: 'Complete', value: countStatus('Complete') },
-      { label: 'In Progress', value: countStatus('In Progress') },
-      { label: 'Blocked', value: countStatus('Blocked'), accent: 'crimson' },
-      { label: 'Overdue', value: countOverdue(), accent: 'crimson' },
-      { label: 'Due Soon', value: countDueSoon() },
-      { label: 'Completion', value: calcCompletion() + '%', accent: 'gold' },
+      { label:'Total Tasks', value:allTasks.length },
+      { label:'Complete', value:countStatus('Complete') },
+      { label:'In Progress', value:countStatus('In Progress') },
+      { label:'Blocked', value:countStatus('Blocked'), accent:'crimson' },
+      { label:'Overdue', value:countOverdue(), accent:'crimson' },
+      { label:'Due Soon', value:countDueSoon() },
+      { label:'Completion', value:calcCompletion()+'%', accent:'gold' },
     ];
   }
-
   kpis.forEach(k => {
     const card = document.createElement('div');
-    card.className = `kpi-card${k.accent ? ' accent-' + k.accent : ''}`;
-    card.innerHTML = `<div class="kpi-value">${k.value ?? 0}</div><div class="kpi-label">${k.label}</div>`;
+    card.className = `kpi-card${k.accent?' accent-'+k.accent:''}`;
+    card.innerHTML = `<div class="kpi-value">${k.value??0}</div><div class="kpi-label">${k.label}</div>`;
     grid.appendChild(card);
   });
 }
 
-function countStatus(s) { return allTasks.filter(t => norm(t.status || t.Status) === s).length; }
+function countStatus(s) { return allTasks.filter(t => norm(t.status||t.Status)===s).length; }
 function countOverdue() { return allTasks.filter(t => isOverdue(t)).length; }
 function countDueSoon() { return allTasks.filter(t => isDueSoon(t)).length; }
 function calcCompletion() {
   if (!allTasks.length) return 0;
-  const done = countStatus('Complete');
-  return Math.round((done / allTasks.length) * 100);
+  return Math.round((countStatus('Complete')/allTasks.length)*100);
 }
-function formatPct(v) { return isNaN(v) ? '0' : Math.round(v); }
+function formatPct(v) { return isNaN(v)?'0':Math.round(v); }
 
 function isOverdue(t) {
-  const d = parseDate(t.deadline || t.dueDate || t.due || t.Deadline);
-  if (!d) return false;
-  return d < new Date() && norm(t.status || t.Status) !== 'Complete';
+  const d = parseDate(t.deadline||t.dueDate||t.due||t.Deadline);
+  return d && d < new Date() && norm(t.status||t.Status) !== 'Complete';
 }
-
 function isDueSoon(t) {
-  const d = parseDate(t.deadline || t.dueDate || t.due || t.Deadline);
+  const d = parseDate(t.deadline||t.dueDate||t.due||t.Deadline);
   if (!d) return false;
-  const now = new Date();
-  const soon = new Date(now);
-  soon.setDate(soon.getDate() + 7);
-  return d >= now && d <= soon && norm(t.status || t.Status) !== 'Complete';
+  const now = new Date(); const soon = new Date(now); soon.setDate(soon.getDate()+7);
+  return d >= now && d <= soon && norm(t.status||t.Status) !== 'Complete';
 }
+function parseDate(v) { if (!v) return null; const d = new Date(v); return isNaN(d.getTime())?null:d; }
+function fmtDate(v) { const d = parseDate(v); if (!d) return '—'; return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); }
+function fmtDateInput(v) { const d = parseDate(v); if (!d) return ''; return d.toISOString().split('T')[0]; }
 
-function parseDate(v) {
-  if (!v) return null;
-  const d = new Date(v);
-  return isNaN(d.getTime()) ? null : d;
-}
-
-function fmtDate(v) {
-  const d = parseDate(v);
-  if (!d) return '—';
-  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-}
-
-// ── Department Cards ──
+// ── Departments ──
 function getDeptData() {
   if (dashData && dashData.departmentSummary) {
     const s = dashData.departmentSummary;
     if (Array.isArray(s)) return s;
-    return Object.entries(s).map(([name, v]) => ({ name, ...v }));
+    return Object.entries(s).map(([name,v]) => ({ name, ...v }));
   }
-  // Build from tasks
   const map = {};
   allTasks.forEach(t => {
-    const d = norm(t.department || t.dept || t.Department) || 'General';
-    if (!map[d]) map[d] = { name: d, total: 0, complete: 0, inProgress: 0, blocked: 0, overdue: 0, dueSoon: 0 };
+    const d = norm(t.department||t.dept||t.Department)||'General';
+    if (!map[d]) map[d] = { name:d, total:0, complete:0, inProgress:0, blocked:0, overdue:0, dueSoon:0 };
     map[d].total++;
-    const s = norm(t.status || t.Status);
-    if (s === 'Complete') map[d].complete++;
-    if (s === 'In Progress') map[d].inProgress++;
-    if (s === 'Blocked') map[d].blocked++;
+    const s = norm(t.status||t.Status);
+    if (s==='Complete') map[d].complete++;
+    if (s==='In Progress') map[d].inProgress++;
+    if (s==='Blocked') map[d].blocked++;
     if (isOverdue(t)) map[d].overdue++;
     if (isDueSoon(t)) map[d].dueSoon++;
   });
   return Object.values(map);
 }
 
-function renderDepartments() {
-  const depts = getDeptData().sort((a, b) => {
-    const pA = deptPct(a), pB = deptPct(b);
-    return pA - pB;
-  });
+function deptPct(d) {
+  if (d.completionPct !== undefined) return Math.round(d.completionPct);
+  const total = d.total||d.totalTasks||0;
+  const done = d.complete||d.completeTasks||0;
+  return total ? Math.round((done/total)*100) : 0;
+}
 
-  ['deptGridOverview', 'deptGridFull'].forEach(id => {
+function renderDepartments() {
+  const depts = getDeptData().sort((a,b) => deptPct(a)-deptPct(b));
+  ['deptGridOverview','deptGridFull'].forEach(id => {
     const grid = document.getElementById(id);
     grid.innerHTML = '';
-    if (!depts.length) { grid.innerHTML = '<div class="empty-state">No department data available.</div>'; return; }
+    if (!depts.length) { grid.innerHTML = '<div class="empty-state">No department data.</div>'; return; }
     depts.forEach(d => grid.appendChild(buildDeptCard(d)));
   });
 }
 
-function deptPct(d) {
-  const total = d.total || d.totalTasks || 0;
-  const done = d.complete || d.completeTasks || 0;
-  if (!total) return 0;
-  if (d.completionPct !== undefined) return Math.round(d.completionPct);
-  return Math.round((done / total) * 100);
-}
-
 function buildDeptCard(d) {
-  const total = d.total || d.totalTasks || 0;
-  const done = d.complete || d.completeTasks || 0;
-  const progress = d.inProgress || d.inProgressTasks || 0;
-  const blocked = d.blocked || d.blockedTasks || 0;
-  const overdue = d.overdue || d.overdueTasks || 0;
+  const total = d.total||d.totalTasks||0;
+  const done = d.complete||d.completeTasks||0;
+  const progress = d.inProgress||d.inProgressTasks||0;
+  const blocked = d.blocked||d.blockedTasks||0;
   const pct = deptPct(d);
-
   const card = document.createElement('div');
   card.className = 'dept-card';
   card.innerHTML = `
     <div class="dept-card-header">
-      <div class="dept-name">${escHtml(d.name || d.department || 'Unknown')}</div>
+      <div class="dept-name">${escHtml(d.name||d.department||'Unknown')}</div>
       <div class="dept-pct">${pct}%</div>
     </div>
     <div class="dept-progress"><div class="dept-progress-fill" style="width:${pct}%"></div></div>
@@ -1443,20 +1087,18 @@ function buildDeptCard(d) {
       <div class="dept-stat"><div class="dept-stat-val" style="color:#6ab882">${done}</div><div class="dept-stat-lbl">Done</div></div>
       <div class="dept-stat"><div class="dept-stat-val" style="color:var(--gold)">${progress}</div><div class="dept-stat-lbl">Active</div></div>
       <div class="dept-stat"><div class="dept-stat-val" style="color:var(--crimson-soft)">${blocked}</div><div class="dept-stat-lbl">Blocked</div></div>
-    </div>
-  `;
+    </div>`;
   return card;
 }
 
-// ── Kanban Board ──
-const KANBAN_COLS = ['Not Started', 'In Progress', 'Waiting', 'Blocked', 'Review', 'Complete'];
+// ── Kanban ──
+const KANBAN_COLS = ['Not Started','In Progress','Waiting','Blocked','Review','Complete'];
 
 function renderKanban(tasks = allTasks) {
   const board = document.getElementById('kanbanBoard');
   board.innerHTML = '';
-
   KANBAN_COLS.forEach(colName => {
-    const colTasks = tasks.filter(t => norm(t.status || t.Status) === colName);
+    const colTasks = tasks.filter(t => norm(t.status||t.Status)===colName);
     const col = document.createElement('div');
     col.className = 'kanban-col';
     col.innerHTML = `
@@ -1464,158 +1106,141 @@ function renderKanban(tasks = allTasks) {
         <span class="col-title">${colName}</span>
         <span class="col-badge">${colTasks.length}</span>
       </div>
-      <div class="kanban-col-body" id="col-${colName.replace(/\s+/g, '-')}"></div>
-    `;
+      <div class="kanban-col-body" id="col-${colName.replace(/\s+/g,'-')}"></div>`;
     board.appendChild(col);
-
     const body = col.querySelector('.kanban-col-body');
-    if (!colTasks.length) {
-      body.innerHTML = `<div class="empty-state" style="padding:20px 8px;font-size:11px">No tasks</div>`;
-      return;
-    }
+    if (!colTasks.length) { body.innerHTML = `<div class="empty-state" style="padding:18px 8px;font-size:11px">No tasks</div>`; return; }
     colTasks.forEach(t => body.appendChild(buildTaskCard(t)));
   });
 }
 
 function buildTaskCard(t) {
-  const name = norm(t.task || t.name || t.taskName || t.title || t.Task || 'Untitled');
-  const dept = norm(t.department || t.dept || t.Department);
-  const owner = norm(t.owner || t.Owner || t.assignee);
-  const priority = norm(t.priority || t.Priority);
-  const deadline = t.deadline || t.dueDate || t.due || t.Deadline;
-  const pctRaw = t.percentComplete || t.completion || t.pct || t['% Complete'] || 0;
-  const pct = Math.min(100, Math.max(0, parseInt(pctRaw) || 0));
-  const status = norm(t.status || t.Status);
+  const name = norm(t.task||t.name||t.taskName||t.title||t.Task||'Untitled');
+  const dept = norm(t.department||t.dept||t.Department);
+  const owner = norm(t.owner||t.Owner||t.assignee);
+  const priority = norm(t.priority||t.Priority);
+  const deadline = t.deadline||t.dueDate||t.due||t.Deadline;
+  const pct = Math.min(100, Math.max(0, parseInt(t.percentComplete||t.completion||t.pct||t['% Complete']||0)||0));
+  const status = norm(t.status||t.Status);
   const overdue = isOverdue(t);
-
-  const card = document.createElement('div');
-  card.className = `task-card${status === 'Blocked' ? ' is-blocked' : ''}${overdue ? ' is-overdue' : ''}`;
-
   const priClass = priority ? `priority-${priority.toLowerCase()}` : '';
   const deadlineFmt = fmtDate(deadline);
-  const deadlineClass = overdue ? 'overdue' : '';
+
+  const card = document.createElement('div');
+  card.className = `task-card${status==='Blocked'?' is-blocked':''}${overdue?' is-overdue':''}`;
+  card.title = 'Click to edit';
 
   card.innerHTML = `
-    <div class="task-name">${escHtml(name)}</div>
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:6px;margin-bottom:5px">
+      <div class="task-name" style="margin-bottom:0">${escHtml(name)}</div>
+      <span class="task-card-edit-hint">Edit ✎</span>
+    </div>
     <div class="task-meta">
       ${dept ? `<span class="task-tag">${escHtml(dept)}</span>` : ''}
       ${priority ? `<span class="task-tag ${priClass}">${escHtml(priority)}</span>` : ''}
     </div>
-    ${owner ? `<div style="font-size:10px;color:var(--text-muted);margin-bottom:4px">${escHtml(owner)}</div>` : ''}
+    ${owner ? `<div style="font-size:10px;color:var(--text-muted);margin-bottom:5px">${escHtml(owner)}</div>` : ''}
+    <div class="task-meta" style="margin-bottom:0">
+      <select class="task-status-select" onclick="event.stopPropagation()" onchange="quickUpdateStatus(event, this)">
+        ${KANBAN_COLS.map(s => `<option value="${s}"${s===status?' selected':''}>${s}</option>`).join('')}
+      </select>
+    </div>
     <div class="task-footer">
-      <span class="task-deadline ${deadlineClass}">${deadlineFmt !== '—' ? deadlineFmt : ''}</span>
+      <span class="task-deadline${overdue?' overdue':''}">${deadlineFmt !== '—' ? deadlineFmt : ''}</span>
       <span style="color:var(--gold-dim)">${pct}%</span>
     </div>
-    <div class="task-progress-bar">
-      <div class="task-progress-fill ${pct === 100 ? 'complete' : ''}" style="width:${pct}%"></div>
-    </div>
-  `;
+    <div class="task-progress-bar"><div class="task-progress-fill${pct===100?' complete':''}" style="width:${pct}%"></div></div>`;
+
+  // Store task reference
+  card._task = t;
+  card.addEventListener('click', () => openEditTaskDrawer(t));
+
+  // Store task ref on select too for quick update
+  card.querySelector('.task-status-select')._task = t;
+
   return card;
+}
+
+// ── Quick status update ──
+async function quickUpdateStatus(event, select) {
+  event.stopPropagation();
+  const t = select._task;
+  const newStatus = select.value;
+  const taskId = t.taskId || t.id || t.ID || t.TaskID;
+  if (!taskId) { showToast('No task ID found — cannot update.', 'error'); return; }
+
+  select.disabled = true;
+  try {
+    await apiPost({ action: 'updateTaskStatus', taskId, status: newStatus });
+    showToast(`Status updated to "${newStatus}"`, 'success');
+    await loadAll(true);
+  } catch(err) {
+    showToast(`Failed to update status: ${err.message}`, 'error');
+    select.disabled = false;
+  }
 }
 
 // ── Deadlines ──
 function renderDeadlines() {
-  const overdue = allTasks.filter(t => isOverdue(t)).sort((a, b) => {
-    const da = parseDate(a.deadline || a.dueDate || a.due || a.Deadline);
-    const db = parseDate(b.deadline || b.dueDate || b.due || b.Deadline);
-    return (da || 0) - (db || 0);
-  });
-
-  const soon = allTasks.filter(t => isDueSoon(t)).sort((a, b) => {
-    const da = parseDate(a.deadline || a.dueDate || a.due || a.Deadline);
-    const db = parseDate(b.deadline || b.dueDate || b.due || b.Deadline);
-    return (da || 0) - (db || 0);
-  });
-
-  renderDeadlineList('overdueList', overdue, 'overdue');
-  renderDeadlineList('dueSoonList', soon, 'soon');
+  const sort = (a,b) => (parseDate(a.deadline||a.dueDate||a.due||a.Deadline)||0) - (parseDate(b.deadline||b.dueDate||b.due||b.Deadline)||0);
+  renderDeadlineList('overdueList', allTasks.filter(t => isOverdue(t)).sort(sort), 'overdue');
+  renderDeadlineList('dueSoonList', allTasks.filter(t => isDueSoon(t)).sort(sort), 'soon');
 }
 
 function renderDeadlineList(id, tasks, cls) {
   const el = document.getElementById(id);
   el.innerHTML = '';
-  if (!tasks.length) {
-    el.innerHTML = `<div class="empty-state">No ${cls === 'overdue' ? 'overdue' : 'upcoming'} tasks.</div>`;
-    return;
-  }
-  tasks.slice(0, 20).forEach(t => {
-    const name = norm(t.task || t.name || t.taskName || t.title || t.Task || 'Untitled');
-    const owner = norm(t.owner || t.Owner || t.assignee);
-    const dept = norm(t.department || t.dept || t.Department);
-    const deadline = t.deadline || t.dueDate || t.due || t.Deadline;
-    const status = norm(t.status || t.Status);
-
+  if (!tasks.length) { el.innerHTML = `<div class="empty-state">No ${cls==='overdue'?'overdue':'upcoming'} tasks.</div>`; return; }
+  tasks.slice(0,20).forEach(t => {
     const item = document.createElement('div');
     item.className = `deadline-item ${cls}`;
     item.innerHTML = `
       <div>
-        <div class="deadline-task-name">${escHtml(name)}</div>
-        <div class="deadline-meta">${[owner, dept].filter(Boolean).map(escHtml).join(' · ')}</div>
-        ${status ? `<span class="status-pill status-${statusClass(status)}" style="margin-top:4px">${status}</span>` : ''}
+        <div class="deadline-task-name">${escHtml(norm(t.task||t.name||t.taskName||t.title||t.Task||'Untitled'))}</div>
+        <div class="deadline-meta">${[norm(t.owner||t.Owner||t.assignee),norm(t.department||t.dept||t.Department)].filter(Boolean).map(escHtml).join(' · ')}</div>
+        ${norm(t.status||t.Status) ? `<span class="status-pill status-${statusClass(norm(t.status||t.Status))}" style="margin-top:4px">${norm(t.status||t.Status)}</span>` : ''}
       </div>
-      <div class="deadline-date ${cls}">${fmtDate(deadline)}</div>
-    `;
+      <div class="deadline-date ${cls}">${fmtDate(t.deadline||t.dueDate||t.due||t.Deadline)}</div>`;
     el.appendChild(item);
   });
 }
 
 // ── Marketing ──
 function renderMarketing() {
+  const items = extractMarketingItems();
   const kpiGrid = document.getElementById('marketingKpis');
   const tbody = document.getElementById('marketingTableBody');
-  kpiGrid.innerHTML = '';
-  tbody.innerHTML = '';
-
-  const items = extractMarketingItems();
+  kpiGrid.innerHTML = ''; tbody.innerHTML = '';
 
   const total = items.length;
-  const done = items.filter(m => ['Published', 'Complete', 'Approved'].includes(norm(m.status || m.Status))).length;
-  const upcoming = items.filter(m => {
-    const d = parseDate(m.publishDate || m.date || m.Date);
-    return d && d >= new Date();
-  }).length;
+  const done = items.filter(m => ['Published','Complete','Approved'].includes(norm(m.status||m.Status))).length;
+  const upcoming = items.filter(m => { const d=parseDate(m.publishDate||m.date||m.Date); return d&&d>=new Date(); }).length;
   const overdueM = items.filter(m => {
-    const d = parseDate(m.publishDate || m.date || m.Date);
-    const s = norm(m.status || m.Status);
-    return d && d < new Date() && !['Published', 'Complete'].includes(s);
+    const d=parseDate(m.publishDate||m.date||m.Date); const s=norm(m.status||m.Status);
+    return d&&d<new Date()&&!['Published','Complete'].includes(s);
   }).length;
 
-  const mKpis = [
-    { label: 'Total Items', value: total },
-    { label: 'Published', value: done, accent: 'gold' },
-    { label: 'Upcoming', value: upcoming },
-    { label: 'Overdue', value: overdueM, accent: 'crimson' },
-  ];
+  [{ label:'Total Items', value:total },{ label:'Published', value:done, accent:'gold' },{ label:'Upcoming', value:upcoming },{ label:'Overdue', value:overdueM, accent:'crimson' }]
+    .forEach(k => {
+      const card = document.createElement('div');
+      card.className = `kpi-card${k.accent?' accent-'+k.accent:''}`;
+      card.innerHTML = `<div class="kpi-value">${k.value}</div><div class="kpi-label">${k.label}</div>`;
+      kpiGrid.appendChild(card);
+    });
 
-  mKpis.forEach(k => {
-    const card = document.createElement('div');
-    card.className = `kpi-card${k.accent ? ' accent-' + k.accent : ''}`;
-    card.innerHTML = `<div class="kpi-value">${k.value}</div><div class="kpi-label">${k.label}</div>`;
-    kpiGrid.appendChild(card);
-  });
+  if (!items.length) { tbody.innerHTML = `<tr><td colspan="6" class="empty-state">No marketing data available.</td></tr>`; return; }
 
-  if (!items.length) {
-    tbody.innerHTML = `<tr><td colspan="6" class="empty-state">No marketing data available.</td></tr>`;
-    return;
-  }
-
-  items.slice(0, 100).forEach(m => {
-    const title = norm(m.title || m.post || m.content || m.name || m.Title || 'Untitled');
-    const channel = norm(m.channel || m.Channel || m.platform || '');
-    const type = norm(m.contentType || m.type || m.Type || '');
-    const owner = norm(m.owner || m.Owner || m.assignee || '');
-    const date = m.publishDate || m.date || m.Date || '';
-    const status = norm(m.status || m.Status || '');
-
+  items.slice(0,200).forEach(m => {
     const tr = document.createElement('tr');
+    tr.title = 'Click to edit';
     tr.innerHTML = `
-      <td>${escHtml(title)}</td>
-      <td>${escHtml(channel)}</td>
-      <td>${escHtml(type)}</td>
-      <td>${escHtml(owner)}</td>
-      <td>${fmtDate(date)}</td>
-      <td>${status ? `<span class="status-pill status-${statusClass(status)}">${status}</span>` : '—'}</td>
-    `;
+      <td>${escHtml(norm(m.title||m.post||m.content||m.name||m.Title||'Untitled'))}</td>
+      <td>${escHtml(norm(m.channel||m.Channel||m.platform||''))}</td>
+      <td>${escHtml(norm(m.contentType||m.type||m.Type||''))}</td>
+      <td>${escHtml(norm(m.owner||m.Owner||m.assignee||''))}</td>
+      <td>${fmtDate(m.publishDate||m.date||m.Date||'')}</td>
+      <td>${norm(m.status||m.Status) ? `<span class="status-pill status-${statusClass(norm(m.status||m.Status))}">${norm(m.status||m.Status)}</span>` : '—'}</td>`;
+    tr.addEventListener('click', () => openEditMktDrawer(m));
     tbody.appendChild(tr);
   });
 }
@@ -1629,106 +1254,286 @@ function extractMarketingItems() {
   return [];
 }
 
+// ── Activity Log ──
+async function loadAndRenderActivity() {
+  const loading = document.getElementById('activityLoading');
+  const list = document.getElementById('activityList');
+  const empty = document.getElementById('activityEmpty');
+  loading.classList.remove('hidden'); list.classList.add('hidden'); empty.classList.add('hidden');
+
+  try {
+    const data = await loadActivityLog();
+    const items = Array.isArray(data) ? data : (data && (data.activity||data.data||data.items||[]));
+    loading.classList.add('hidden');
+    if (!items || !items.length) { empty.classList.remove('hidden'); return; }
+
+    list.innerHTML = '';
+    items.slice(0,50).forEach(a => {
+      const item = document.createElement('div');
+      item.className = 'activity-item';
+      item.innerHTML = `
+        <span class="activity-ts">${fmtActivityTime(a.timestamp||a.time||a.Timestamp||'')}</span>
+        <span class="activity-user">${escHtml(norm(a.user||a.User||a.changedBy||''))}</span>
+        <span class="activity-field">${escHtml(norm(a.itemType||a.type||a.sheet||''))} — ${escHtml(norm(a.field||a.Field||a.fieldChanged||''))}</span>
+        <span class="activity-val-old">${escHtml(norm(a.oldValue||a.old||a.OldValue||''))}</span>
+        <span class="activity-val-new">${escHtml(norm(a.newValue||a.new||a.NewValue||''))}</span>`;
+      list.appendChild(item);
+    });
+    list.classList.remove('hidden');
+  } catch {
+    loading.classList.add('hidden');
+    empty.classList.remove('hidden');
+  }
+}
+
+function fmtActivityTime(v) {
+  if (!v) return '—';
+  const d = new Date(v);
+  if (isNaN(d.getTime())) return v;
+  return d.toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+}
+
 // ── Charts ──
 function renderCharts() {
   Chart.defaults.color = '#6b6b72';
   Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
   Chart.defaults.font.family = "'Inter', sans-serif";
   Chart.defaults.font.size = 11;
-
   destroyCharts();
 
-  // Status donut
   const statusCounts = {};
   KANBAN_COLS.forEach(s => { statusCounts[s] = countStatus(s); });
-  makeDonut('chartStatus', Object.keys(statusCounts), Object.values(statusCounts),
-    Object.keys(statusCounts).map(s => STATUS_COLOURS[s] || PALETTE.ash));
+  makeDonut('chartStatus', Object.keys(statusCounts), Object.values(statusCounts), Object.keys(statusCounts).map(s => STATUS_COLOURS[s]||PALETTE.ash));
 
-  // Priority donut
   const pCounts = {};
-  ['Critical','High','Medium','Low'].forEach(p => {
-    pCounts[p] = allTasks.filter(t => norm(t.priority || t.Priority) === p).length;
-  });
-  makeDonut('chartPriority', Object.keys(pCounts), Object.values(pCounts),
-    Object.keys(pCounts).map(p => PRIORITY_COLOURS[p] || PALETTE.ash));
+  ['Critical','High','Medium','Low'].forEach(p => { pCounts[p] = allTasks.filter(t => norm(t.priority||t.Priority)===p).length; });
+  makeDonut('chartPriority', Object.keys(pCounts), Object.values(pCounts), Object.keys(pCounts).map(p => PRIORITY_COLOURS[p]||PALETTE.ash));
 
-  // Dept bar
-  const depts = getDeptData().sort((a, b) => deptPct(a) - deptPct(b));
-  const deptNames = depts.map(d => d.name || d.department);
-  const deptPcts = depts.map(d => deptPct(d));
-  makeBar('chartDept', deptNames, deptPcts);
+  const depts = getDeptData().sort((a,b) => deptPct(a)-deptPct(b));
+  makeBar('chartDept', depts.map(d => d.name||d.department), depts.map(d => deptPct(d)));
 
-  // Marketing status
   const items = extractMarketingItems();
   const mStatus = {};
-  items.forEach(m => {
-    const s = norm(m.status || m.Status) || 'Unknown';
-    mStatus[s] = (mStatus[s] || 0) + 1;
-  });
+  items.forEach(m => { const s = norm(m.status||m.Status)||'Unknown'; mStatus[s]=(mStatus[s]||0)+1; });
   if (Object.keys(mStatus).length) {
-    makeDonut('chartMarketing', Object.keys(mStatus), Object.values(mStatus),
-      Object.keys(mStatus).map((_, i) => Object.values(PALETTE)[i % Object.values(PALETTE).length]));
+    makeDonut('chartMarketing', Object.keys(mStatus), Object.values(mStatus), Object.keys(mStatus).map((_,i) => Object.values(PALETTE)[i%Object.values(PALETTE).length]));
   }
 }
 
 function makeDonut(id, labels, data, colours) {
   const ctx = document.getElementById(id);
   if (!ctx) return;
-  charts[id] = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels,
-      datasets: [{ data, backgroundColor: colours, borderWidth: 1, borderColor: '#1a1a1e' }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: 'right',
-          labels: { padding: 12, boxWidth: 10, font: { size: 11 } }
-        }
-      },
-      cutout: '65%',
-    }
-  });
+  charts[id] = new Chart(ctx, { type:'doughnut', data:{ labels, datasets:[{ data, backgroundColor:colours, borderWidth:1, borderColor:'#1a1a1e' }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ padding:12, boxWidth:10, font:{size:11} } } }, cutout:'65%' } });
 }
 
 function makeBar(id, labels, data) {
   const ctx = document.getElementById(id);
   if (!ctx) return;
-  charts[id] = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels,
-      datasets: [{
-        label: 'Completion %',
-        data,
-        backgroundColor: data.map(v => v >= 75 ? PALETTE.green : v >= 40 ? PALETTE.gold : PALETTE.crimson),
-        borderRadius: 3,
-        borderWidth: 0,
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      indexAxis: 'y',
-      plugins: { legend: { display: false } },
-      scales: {
-        x: {
-          min: 0, max: 100,
-          ticks: { callback: v => v + '%', stepSize: 25 },
-          grid: { color: 'rgba(255,255,255,0.04)' },
-        },
-        y: { grid: { display: false } }
-      }
-    }
-  });
+  charts[id] = new Chart(ctx, { type:'bar', data:{ labels, datasets:[{ label:'Completion %', data, backgroundColor:data.map(v => v>=75?PALETTE.green:v>=40?PALETTE.gold:PALETTE.crimson), borderRadius:3, borderWidth:0 }] }, options:{ responsive:true, maintainAspectRatio:false, indexAxis:'y', plugins:{ legend:{ display:false } }, scales:{ x:{ min:0, max:100, ticks:{ callback: v => v+'%', stepSize:25 }, grid:{ color:'rgba(255,255,255,0.04)' } }, y:{ grid:{ display:false } } } } });
 }
 
-function destroyCharts() {
-  Object.values(charts).forEach(c => { try { c.destroy(); } catch {} });
-  charts = {};
+function destroyCharts() { Object.values(charts).forEach(c => { try { c.destroy(); } catch {} }); charts = {}; }
+
+// ── TASK DRAWER ──
+function openNewTaskDrawer() {
+  isNewTask = true;
+  selectedTask = null;
+  document.getElementById('taskDrawerTitle').textContent = 'New Task';
+  document.getElementById('saveTaskBtn').querySelector('.save-label').textContent = 'Create Task';
+  document.getElementById('editTaskId').value = '';
+  document.getElementById('editTaskName').value = '';
+  document.getElementById('editTaskDesc').value = '';
+  document.getElementById('editTaskNotes').value = '';
+  document.getElementById('editTaskDeadline').value = '';
+  document.getElementById('editTaskPct').value = '0';
+  setSelectVal('editTaskDept', '');
+  setSelectVal('editTaskOwner', '');
+  setSelectVal('editTaskPriority', 'Medium');
+  setSelectVal('editTaskStatus', 'Not Started');
+  clearFormErrors();
+  openDrawer('taskDrawer', 'taskDrawerOverlay');
+}
+
+function openEditTaskDrawer(t) {
+  isNewTask = false;
+  selectedTask = t;
+  document.getElementById('taskDrawerTitle').textContent = 'Edit Task';
+  document.getElementById('saveTaskBtn').querySelector('.save-label').textContent = 'Save Changes';
+  const taskId = t.taskId||t.id||t.ID||t.TaskID||'';
+  document.getElementById('editTaskId').value = taskId;
+  document.getElementById('editTaskName').value = norm(t.task||t.name||t.taskName||t.title||t.Task||'');
+  document.getElementById('editTaskDesc').value = norm(t.description||t.Description||t.desc||'');
+  document.getElementById('editTaskNotes').value = norm(t.notes||t.Notes||'');
+  document.getElementById('editTaskDeadline').value = fmtDateInput(t.deadline||t.dueDate||t.due||t.Deadline);
+  document.getElementById('editTaskPct').value = parseInt(t.percentComplete||t.completion||t.pct||t['% Complete']||0)||0;
+  setSelectVal('editTaskDept', norm(t.department||t.dept||t.Department));
+  setSelectVal('editTaskOwner', norm(t.owner||t.Owner||t.assignee));
+  setSelectVal('editTaskPriority', norm(t.priority||t.Priority));
+  setSelectVal('editTaskStatus', norm(t.status||t.Status));
+  clearFormErrors();
+  openDrawer('taskDrawer', 'taskDrawerOverlay');
+}
+
+function closeTaskDrawer() { closeDrawer('taskDrawer', 'taskDrawerOverlay'); }
+
+async function handleSaveTask() {
+  const btn = document.getElementById('saveTaskBtn');
+  clearFormErrors();
+
+  // Validate
+  const taskName = document.getElementById('editTaskName').value.trim();
+  const dept = document.getElementById('editTaskDept').value;
+  const status = document.getElementById('editTaskStatus').value;
+  const priority = document.getElementById('editTaskPriority').value;
+  const pctRaw = document.getElementById('editTaskPct').value;
+  const pct = parseInt(pctRaw);
+  let valid = true;
+
+  if (!taskName) { showFieldError('errTaskName'); valid = false; }
+  if (!dept) { showFieldError('errTaskDept'); valid = false; }
+  if (!status) { showFieldError('errTaskStatus'); valid = false; }
+  if (!priority) { showFieldError('errTaskPriority'); valid = false; }
+  if (pctRaw !== '' && (isNaN(pct)||pct<0||pct>100)) { showFieldError('errTaskPct'); valid = false; }
+  if (!valid) return;
+
+  setSaveBtnLoading(btn, true);
+
+  const fields = {
+    task: taskName,
+    department: dept,
+    description: document.getElementById('editTaskDesc').value.trim(),
+    owner: document.getElementById('editTaskOwner').value,
+    priority,
+    status,
+    deadline: document.getElementById('editTaskDeadline').value || '',
+    percentComplete: isNaN(pct) ? 0 : pct,
+    notes: document.getElementById('editTaskNotes').value.trim(),
+  };
+
+  try {
+    if (isNewTask) {
+      await createNewTask(fields);
+      showToast('Task created successfully', 'success');
+    } else {
+      const taskId = document.getElementById('editTaskId').value;
+      if (!taskId) { showToast('Task ID missing — cannot save', 'error'); setSaveBtnLoading(btn, false); return; }
+      await saveTaskChanges(taskId, fields);
+      showToast('Task saved', 'success');
+    }
+    closeTaskDrawer();
+    await loadAll(true);
+  } catch(err) {
+    showToast(`Save failed: ${err.message}`, 'error');
+    setSaveBtnLoading(btn, false);
+  }
+}
+
+// ── MARKETING DRAWER ──
+function openEditMktDrawer(m) {
+  selectedMktItem = m;
+  const campaignId = m.campaignId||m.id||m.ID||m.CampaignID||'';
+  document.getElementById('editMktId').value = campaignId;
+  document.getElementById('editMktPost').value = norm(m.post||m.title||m.name||m.Title||'');
+  document.getElementById('editMktContent').value = norm(m.content||m.Content||m.description||'');
+  document.getElementById('editMktNotes').value = norm(m.notes||m.Notes||'');
+  document.getElementById('editMktDate').value = fmtDateInput(m.publishDate||m.date||m.Date);
+  setSelectVal('editMktChannel', norm(m.channel||m.Channel||m.platform||''));
+  setSelectVal('editMktType', norm(m.contentType||m.type||m.Type||''));
+  setSelectVal('editMktOwner', norm(m.owner||m.Owner||m.assignee||''));
+  setSelectVal('editMktPriority', norm(m.priority||m.Priority||''));
+  setSelectVal('editMktStatus', norm(m.status||m.Status||''));
+  openDrawer('mktDrawer', 'mktDrawerOverlay');
+}
+
+function closeMktDrawer() { closeDrawer('mktDrawer', 'mktDrawerOverlay'); }
+
+async function handleSaveMkt() {
+  const btn = document.getElementById('saveMktBtn');
+  const campaignId = document.getElementById('editMktId').value;
+  if (!campaignId) { showToast('No campaign ID — cannot save', 'error'); return; }
+
+  setSaveBtnLoading(btn, true);
+
+  const fields = {
+    post: document.getElementById('editMktPost').value.trim(),
+    content: document.getElementById('editMktContent').value.trim(),
+    channel: document.getElementById('editMktChannel').value,
+    contentType: document.getElementById('editMktType').value,
+    owner: document.getElementById('editMktOwner').value,
+    publishDate: document.getElementById('editMktDate').value || '',
+    priority: document.getElementById('editMktPriority').value,
+    status: document.getElementById('editMktStatus').value,
+    notes: document.getElementById('editMktNotes').value.trim(),
+  };
+
+  try {
+    await saveMarketingChanges(campaignId, fields);
+    showToast('Marketing item saved', 'success');
+    closeMktDrawer();
+    await loadAll(true);
+  } catch(err) {
+    showToast(`Save failed: ${err.message}`, 'error');
+    setSaveBtnLoading(btn, false);
+  }
+}
+
+// ── Drawer helpers ──
+function openDrawer(drawerId, overlayId) {
+  document.getElementById(overlayId).classList.add('open');
+  document.getElementById(drawerId).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDrawer(drawerId, overlayId) {
+  document.getElementById(overlayId).classList.remove('open');
+  document.getElementById(drawerId).classList.remove('open');
+  document.body.style.overflow = '';
+  const btn = document.getElementById('saveTaskBtn');
+  if (btn) setSaveBtnLoading(btn, false);
+  const mBtn = document.getElementById('saveMktBtn');
+  if (mBtn) setSaveBtnLoading(mBtn, false);
+}
+
+function setSaveBtnLoading(btn, loading) {
+  btn.disabled = loading;
+  btn.classList.toggle('saving', loading);
+}
+
+function setSelectVal(id, value) {
+  const sel = document.getElementById(id);
+  if (!sel) return;
+  // Try exact match first
+  for (let i=0;i<sel.options.length;i++) {
+    if (sel.options[i].value === value) { sel.selectedIndex = i; return; }
+  }
+  // Try case-insensitive
+  const lv = (value||'').toLowerCase();
+  for (let i=0;i<sel.options.length;i++) {
+    if (sel.options[i].value.toLowerCase() === lv) { sel.selectedIndex = i; return; }
+  }
+}
+
+function clearFormErrors() {
+  document.querySelectorAll('.form-error').forEach(e => e.classList.add('hidden'));
+}
+
+function showFieldError(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.remove('hidden');
+}
+
+// ── Toast ──
+function showToast(message, type = 'info') {
+  const container = document.getElementById('toastContainer');
+  const icons = { success:'✓', error:'✕', info:'ℹ' };
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `<span class="toast-icon">${icons[type]||'ℹ'}</span><span>${escHtml(message)}</span>`;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.style.animation = 'toastOut 0.3s ease forwards';
+    setTimeout(() => toast.remove(), 300);
+  }, 3500);
 }
 
 // ── Tabs ──
@@ -1737,29 +1542,23 @@ function switchTab(name, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById(`tab-${name}`).classList.add('active');
   btn.classList.add('active');
+  if (name === 'activity') loadAndRenderActivity();
 }
 
 // ── Utilities ──
 function show(id) { document.getElementById(id).classList.remove('hidden'); }
 function hide(id) { document.getElementById(id).classList.add('hidden'); }
-
-function escHtml(str) {
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+function norm(v) { return v ? String(v).trim() : ''; }
+function escHtml(str) { return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 function statusClass(s) {
   const map = {
-    'Complete': 'complete', 'Published': 'published', 'Approved': 'complete',
-    'In Progress': 'progress', 'Active': 'progress',
-    'Not Started': 'notstarted',
-    'Blocked': 'blocked',
-    'Overdue': 'overdue',
-    'Waiting': 'waiting',
-    'Review': 'review',
-    'Scheduled': 'scheduled',
-    'Draft': 'draft',
+    'Complete':'complete','Published':'published','Approved':'complete',
+    'In Progress':'progress','Active':'progress',
+    'Not Started':'notstarted','Blocked':'blocked','Overdue':'overdue',
+    'Waiting':'waiting','Review':'review','Scheduled':'scheduled','Draft':'draft',
   };
-  return map[s] || 'notstarted';
+  return map[s]||'notstarted';
 }
 
 // ── Init ──
