@@ -813,51 +813,41 @@ async function apiPost(payload) {
   const jsonStr = JSON.stringify(payload);
   logDebug('POST →', jsonStr);
 
-  let r;
+  // Apps Script (even deployed as "Anyone") redirects POST requests via a 302.
+  // When the browser follows that redirect cross-origin, it triggers a CORS error
+  // on the *response* — but the POST body has already been received and processed
+  // by the Apps Script. So we use no-cors mode: the request goes through and the
+  // sheet is updated, but the response is opaque (we can't read it).
+  // We treat completion of the fetch as success.
   try {
-    r = await fetch(BASE_URL, {
+    await fetch(BASE_URL, {
       method: 'POST',
+      mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
       body: jsonStr,
-      redirect: 'follow',
     });
-  } catch (fetchErr) {
-    logDebug('POST network error:', fetchErr.message);
-    throw new Error('Network error — check your connection: ' + fetchErr.message);
-  }
-
-  const text = await r.text();
-  logDebug('POST ←', r.status, text.slice(0, 400));
-
-  if (!r.ok) throw new Error(`Server error HTTP ${r.status}: ${text.slice(0, 200)}`);
-
-  try {
-    const parsed = JSON.parse(text);
-    // GS returns { error: true, message: '...' } on failure
-    if (parsed.error) throw new Error(parsed.message || 'Apps Script returned an error');
-    return parsed;
-  } catch (parseErr) {
-    if (parseErr.message && !parseErr.message.startsWith('JSON')) throw parseErr;
+    logDebug('POST sent (no-cors) ✓');
     return { success: true };
+  } catch (fetchErr) {
+    // A no-cors fetch almost never throws — if it does it's a real network problem
+    logDebug('POST failed:', fetchErr.message);
+    throw new Error('Network error — check your connection: ' + fetchErr.message);
   }
 }
 
 // GS updateTaskField(taskId, field, value) handles ONE field per call.
-// We send sequentially — not parallel — to avoid sheet write race conditions.
+// We send sequentially to avoid sheet write race conditions.
+// Note: with no-cors mode we cannot read the response — we trust the POST reached GS.
 async function saveTaskChanges(taskId, changes) {
-  const results = [];
   for (const [field, value] of Object.entries(changes)) {
-    // Map dashboard field names → exact GS column header names
     const gsField = TASK_FIELD_MAP[field] || field;
-    const result = await apiPost({ action: 'updateTaskField', taskId, field: gsField, value });
-    logDebug('Task field saved:', gsField, '=', String(value).slice(0,50), '→', result.success ? 'OK' : JSON.stringify(result));
-    results.push(result);
+    await apiPost({ action: 'updateTaskField', taskId, field: gsField, value });
+    logDebug('Sent updateTaskField:', gsField, '=', String(value).slice(0, 60));
   }
-  return results;
+  return { success: true };
 }
 
 async function createNewTask(task) {
-  // Map keys to exact GS column names before sending
   const mapped = {
     department:      task.department      || '',
     task:            task.task            || '',
@@ -869,19 +859,17 @@ async function createNewTask(task) {
     percentComplete: task.percentComplete || 0,
     notes:           task.notes           || '',
   };
-  return apiPost({ action: 'createTask', task: mapped });
+  await apiPost({ action: 'createTask', task: mapped });
+  return { success: true };
 }
 
-// GS updateMarketingField(campaignId, field, value) — same pattern as tasks
 async function saveMarketingChanges(campaignId, changes) {
-  const results = [];
   for (const [field, value] of Object.entries(changes)) {
     const gsField = MKT_FIELD_MAP[field] || field;
-    const result = await apiPost({ action: 'updateMarketingField', campaignId, field: gsField, value });
-    logDebug('Mkt field saved:', gsField, '=', String(value).slice(0,50), '→', result.success ? 'OK' : JSON.stringify(result));
-    results.push(result);
+    await apiPost({ action: 'updateMarketingField', campaignId, field: gsField, value });
+    logDebug('Sent updateMarketingField:', gsField, '=', String(value).slice(0, 60));
   }
-  return results;
+  return { success: true };
 }
 
 // ── Field name maps (dashboard key → GS sheet column header) ──
@@ -1284,6 +1272,7 @@ async function quickUpdateStatus(event, select) {
   try {
     await apiPost({ action: 'updateTaskStatus', taskId, status: newStatus });
     showToast(`Status updated to "${newStatus}"`, 'success');
+    await new Promise(r => setTimeout(r, 1200));
     await loadAll(true);
   } catch(err) {
     showToast(`Failed to update status: ${err.message}`, 'error');
@@ -1534,6 +1523,8 @@ async function handleSaveTask() {
       showToast('Task saved', 'success');
     }
     closeTaskDrawer();
+    // Brief pause to let Apps Script finish writing before we re-fetch
+    await new Promise(r => setTimeout(r, 1200));
     await loadAll(true);
   } catch(err) {
     showToast(`Save failed: ${err.message}`, 'error');
@@ -1583,6 +1574,7 @@ async function handleSaveMkt() {
     await saveMarketingChanges(campaignId, fields);
     showToast('Marketing item saved', 'success');
     closeMktDrawer();
+    await new Promise(r => setTimeout(r, 1200));
     await loadAll(true);
   } catch(err) {
     showToast(`Save failed: ${err.message}`, 'error');
