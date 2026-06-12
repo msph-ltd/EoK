@@ -872,6 +872,76 @@ async function saveMarketingChanges(campaignId, changes) {
   return { success: true };
 }
 
+// ── Silent background refresh ──
+// Re-fetches data without showing any loading state — used after optimistic saves.
+// Has a short delay to let Apps Script finish the write first.
+let silentRefreshTimer = null;
+function silentRefresh(delay = 2000) {
+  // Debounce — if multiple saves happen quickly, only refresh once
+  clearTimeout(silentRefreshTimer);
+  silentRefreshTimer = setTimeout(async () => {
+    try {
+      setSyncing(true);
+      const dash = await apiGet('dashboard');
+      dashData = dash;
+      marketingData = (dash && Array.isArray(dash.marketing)) ? dash.marketing : marketingData;
+      allTasks = extractTasks(dash);
+      filteredTasks = [...allTasks];
+      populateFilters();
+      renderKPIs();
+      renderDepartments();
+      renderKanban(filteredTasks);
+      renderDeadlines();
+      renderMarketing();
+      renderCharts();
+      applyFilters();
+      document.getElementById('lastSynced').textContent = new Date().toLocaleTimeString('en-GB');
+      setSyncing(false, true);
+    } catch(err) {
+      logDebug('Silent refresh error:', err.message);
+      setSyncing(false);
+    }
+  }, delay);
+}
+
+// ── Optimistic local updates ──
+// Immediately update the in-memory task/mkt objects so the UI reflects
+// changes without waiting for GS to respond.
+function applyLocalTaskUpdate(taskId, fields) {
+  const task = allTasks.find(t => (t.taskId || t.id || t.ID) === taskId);
+  if (!task) return;
+  // Map dashboard keys → task object keys
+  if (fields.task !== undefined)            task.task = fields.task;
+  if (fields.department !== undefined)      task.department = fields.department;
+  if (fields.description !== undefined)     task.description = fields.description;
+  if (fields.owner !== undefined)           task.owner = fields.owner;
+  if (fields.priority !== undefined)        task.priority = fields.priority;
+  if (fields.status !== undefined)          task.status = fields.status;
+  if (fields.deadline !== undefined)        task.deadline = fields.deadline;
+  if (fields.percentComplete !== undefined) task.percentComplete = fields.percentComplete;
+  if (fields.notes !== undefined)           task.notes = fields.notes;
+  filteredTasks = [...allTasks];
+  renderKanban(filteredTasks);
+  renderKPIs();
+  renderDepartments();
+}
+
+function applyLocalMktUpdate(campaignId, fields) {
+  const items = extractMarketingItems();
+  const item = items.find(m => (m.campaignId || m.id) === campaignId);
+  if (!item) return;
+  if (fields.post !== undefined)        item.post = fields.post;
+  if (fields.content !== undefined)     item.content = fields.content;
+  if (fields.channel !== undefined)     item.channel = fields.channel;
+  if (fields.contentType !== undefined) item.contentType = fields.contentType;
+  if (fields.owner !== undefined)       item.owner = fields.owner;
+  if (fields.publishDate !== undefined) item.publishDate = fields.publishDate;
+  if (fields.priority !== undefined)    item.priority = fields.priority;
+  if (fields.status !== undefined)      item.status = fields.status;
+  if (fields.notes !== undefined)       item.notes = fields.notes;
+  renderMarketing();
+}
+
 // ── Field name maps (dashboard key → GS sheet column header) ──
 // These match the exact column names in the GS getTasks() / getMarketingStrategy() functions.
 const TASK_FIELD_MAP = {
@@ -925,18 +995,28 @@ async function loadActivityLog() {
 }
 
 // ── Load all data ──
+// lookupsData is fetched once and cached — it never changes during a session.
+// marketingData is embedded in the dashboard response (dashData.marketing),
+// so we don't need a separate fetch for it on every refresh.
 async function loadAll(manual = false) {
   setSyncing(true);
   try {
-    const [dash, mkt, lookups] = await Promise.all([
+    // Only fetch lookups on first load (they don't change)
+    const fetchLookups = !lookupsData
+      ? apiGet('lookups').catch(() => null)
+      : Promise.resolve(lookupsData);
+
+    // Dashboard response already contains tasks + marketing + summary
+    const [dash, lookups] = await Promise.all([
       apiGet('dashboard'),
-      apiGet('marketing').catch(() => null),
-      apiGet('lookups').catch(() => null),
+      fetchLookups,
     ]);
 
     dashData = dash;
-    marketingData = mkt;
-    lookupsData = lookups;
+    // Use marketing embedded in dashboard — avoids a separate slow GS call
+    marketingData = (dash && Array.isArray(dash.marketing)) ? dash.marketing : marketingData;
+    if (lookups && lookups !== lookupsData) lookupsData = lookups;
+
     allTasks = extractTasks(dash);
     filteredTasks = [...allTasks];
 
@@ -968,7 +1048,9 @@ async function loadAll(manual = false) {
 
 function scheduleRefresh() {
   clearTimeout(autoRefreshTimer);
-  autoRefreshTimer = setTimeout(() => loadAll(false), 60000);
+  // 90s interval — frequent enough to stay current, infrequent enough
+  // not to constantly cold-start the Apps Script execution environment
+  autoRefreshTimer = setTimeout(() => loadAll(false), 90000);
 }
 
 function setSyncing(active, done = false) {
@@ -1269,15 +1351,25 @@ async function quickUpdateStatus(event, select) {
   if (!taskId) { showToast('No task ID found — cannot update.', 'error'); return; }
 
   select.disabled = true;
-  try {
-    await apiPost({ action: 'updateTaskStatus', taskId, status: newStatus });
-    showToast(`Status updated to "${newStatus}"`, 'success');
-    await new Promise(r => setTimeout(r, 1200));
-    await loadAll(true);
-  } catch(err) {
-    showToast(`Failed to update status: ${err.message}`, 'error');
-    select.disabled = false;
-  }
+  // Optimistic: update the task locally right away
+  const taskObj = allTasks.find(t => (t.taskId||t.id||t.ID) === taskId);
+  const prevStatus = taskObj ? taskObj.status : null;
+  if (taskObj) taskObj.status = newStatus;
+  filteredTasks = [...allTasks];
+  renderKanban(filteredTasks);
+  renderKPIs();
+  select.disabled = false;
+  showToast(`Status → ${newStatus}`, 'success');
+  // Fire GS write in background
+  apiPost({ action: 'updateTaskStatus', taskId, status: newStatus }).then(() => {
+    silentRefresh();
+  }).catch(err => {
+    // Roll back the optimistic update on failure
+    if (taskObj && prevStatus) taskObj.status = prevStatus;
+    filteredTasks = [...allTasks];
+    renderKanban(filteredTasks);
+    showToast('Status update failed: ' + err.message, 'error');
+  });
 }
 
 // ── Deadlines ──
@@ -1514,18 +1606,25 @@ async function handleSaveTask() {
 
   try {
     if (isNewTask) {
-      await createNewTask(fields);
-      showToast('Task created successfully', 'success');
+      // Optimistic: close immediately, fire POST in background, then quietly refresh
+      closeTaskDrawer();
+      showToast('Creating task…', 'info');
+      createNewTask(fields).then(() => {
+        showToast('Task created', 'success');
+        silentRefresh();
+      }).catch(err => showToast('Create may have failed: ' + err.message, 'error'));
     } else {
       const taskId = document.getElementById('editTaskId').value;
       if (!taskId) { showToast('Task ID missing — cannot save', 'error'); setSaveBtnLoading(btn, false); return; }
-      await saveTaskChanges(taskId, fields);
-      showToast('Task saved', 'success');
+      // Optimistic: update the local task object immediately so UI reflects change at once
+      applyLocalTaskUpdate(taskId, fields);
+      closeTaskDrawer();
+      showToast('Saved', 'success');
+      // Fire the actual GS writes in the background
+      saveTaskChanges(taskId, fields).then(() => {
+        silentRefresh();
+      }).catch(err => showToast('Background save error: ' + err.message, 'error'));
     }
-    closeTaskDrawer();
-    // Brief pause to let Apps Script finish writing before we re-fetch
-    await new Promise(r => setTimeout(r, 1200));
-    await loadAll(true);
   } catch(err) {
     showToast(`Save failed: ${err.message}`, 'error');
     setSaveBtnLoading(btn, false);
@@ -1571,11 +1670,12 @@ async function handleSaveMkt() {
   };
 
   try {
-    await saveMarketingChanges(campaignId, fields);
-    showToast('Marketing item saved', 'success');
+    applyLocalMktUpdate(campaignId, fields);
     closeMktDrawer();
-    await new Promise(r => setTimeout(r, 1200));
-    await loadAll(true);
+    showToast('Saved', 'success');
+    saveMarketingChanges(campaignId, fields).then(() => {
+      silentRefresh();
+    }).catch(err => showToast('Background save error: ' + err.message, 'error'));
   } catch(err) {
     showToast(`Save failed: ${err.message}`, 'error');
     setSaveBtnLoading(btn, false);
