@@ -1617,7 +1617,7 @@ function fmtActivityTime(v) {
 
 // ── Charts ──
 function renderCharts() {
-  const isLight = document.documentElement.classList.contains('light');
+  const isLight = isLightMode();
   Chart.defaults.color = isLight ? '#6a5a5a' : '#6b6b72';
   Chart.defaults.borderColor = isLight ? 'rgba(90,20,20,0.08)' : 'rgba(255,255,255,0.06)';
   Chart.defaults.font.family = "'Inter', sans-serif";
@@ -1644,16 +1644,44 @@ function renderCharts() {
   }
 }
 
+function isLightMode() {
+  return document.documentElement.classList.contains('light');
+}
+
 function makeDonut(id, labels, data, colours) {
   const ctx = document.getElementById(id);
   if (!ctx) return;
-  charts[id] = new Chart(ctx, { type:'doughnut', data:{ labels, datasets:[{ data, backgroundColor:colours, borderWidth:1, borderColor: isLight ? '#f5f0e8' : '#1a1a1e' }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ padding:12, boxWidth:10, font:{size:11} } } }, cutout:'65%' } });
+  const light = isLightMode();
+  charts[id] = new Chart(ctx, {
+    type: 'doughnut',
+    data: { labels, datasets: [{ data, backgroundColor: colours, borderWidth: 1, borderColor: light ? '#f5f0e8' : '#1a1a1e' }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'right', labels: { padding: 12, boxWidth: 10, font: { size: 11 }, color: light ? '#5a2a2a' : '#8a8a92' } } },
+      cutout: '65%'
+    }
+  });
 }
 
 function makeBar(id, labels, data) {
   const ctx = document.getElementById(id);
   if (!ctx) return;
-  charts[id] = new Chart(ctx, { type:'bar', data:{ labels, datasets:[{ label:'Completion %', data, backgroundColor:data.map(v => v>=75?PALETTE.green:v>=40?PALETTE.gold:PALETTE.crimson), borderRadius:3, borderWidth:0 }] }, options:{ responsive:true, maintainAspectRatio:false, indexAxis:'y', plugins:{ legend:{ display:false } }, scales:{ x:{ min:0, max:100, ticks:{ callback: v => v+'%', stepSize:25 }, grid:{ color:'rgba(255,255,255,0.04)' } }, y:{ grid:{ display:false } } } } });
+  const light = isLightMode();
+  const P = getPalette();
+  charts[id] = new Chart(ctx, {
+    type: 'bar',
+    data: { labels, datasets: [{ label: 'Completion %', data,
+      backgroundColor: data.map(v => v >= 75 ? P.green : v >= 40 ? P.gold : P.crimson),
+      borderRadius: 3, borderWidth: 0 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { min: 0, max: 100, ticks: { callback: v => v + '%', stepSize: 25, color: light ? '#6a5a5a' : '#6b6b72' }, grid: { color: light ? 'rgba(90,20,20,0.06)' : 'rgba(255,255,255,0.04)' } },
+        y: { grid: { display: false }, ticks: { color: light ? '#5a2a2a' : '#8a8a92' } }
+      }
+    }
+  });
 }
 
 function destroyCharts() { Object.values(charts).forEach(c => { try { c.destroy(); } catch {} }); charts = {}; }
